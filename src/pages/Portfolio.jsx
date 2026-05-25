@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import portfolioData from "../data_temp/portfolioData";
+import portfolioData from "../data/portfolioData";
 
 // ← import รูปทั้งหมดตรงนี้
 import label1 from "../assets/label1.jpg";
