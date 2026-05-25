@@ -1,4 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import profileImg from "../assets/work.png";
+import pyImg from "../assets/PY/111.jpg";
+import paoImg from "../assets/PAO/002.jpg";
+import ylImg from "../assets/YL/101.jpg";
 
 function Home() {
   const navigate = useNavigate();
@@ -8,7 +12,7 @@ function Home() {
       <div className="hero">
         <div className="avatar-wrap">
           <div className="avatar-ring"></div>
-          <img src="/src/assets/งานอยู่ไหน.png" alt="Profile" className="avatar" />
+          <img src={profileImg} alt="Profile" className="avatar" />
         </div>
         <div className="hero-text">
           <h2>สวัสดีครับ  ผม <span>[สุทธิพงษ์ พงษ์สระพัง]</span></h2>
@@ -26,7 +30,7 @@ function Home() {
       <div className="stats">
 
   <div className="stat-card">
-    <img src="/src/assets/PY/111.jpg" alt="เทศบาลพระยืน" className="stat-img" />
+    <img src={pyImg} alt="เทศบาลพระยืน" className="stat-img" />
     <div className="stat-body">
       <span className="stat-title">เทศบาลพระยืนมิ่งมงคล</span>
       <p className="stat-desc">จัดทำเอกสารดิจิทัลและโครงการ/กิจกรรมต่างๆ ของงานป้องกันฯ</p>
@@ -34,7 +38,7 @@ function Home() {
   </div>
 
   <div className="stat-card">
-    <img src="/src/assets/PAO/002.jpg" alt="อบจ.ขอนแก่น" className="stat-img" />
+    <img src={paoImg} alt="อบจ.ขอนแก่น" className="stat-img" />
     <div className="stat-body">
       <span className="stat-title">องค์การบริหารส่วนจังหวัดขอนแก่น</span>
       <p className="stat-desc">ดูแลอุปกรณ์คอมพิวเตอร์และจัดทำเอกสารดิจิทัลเพื่อประชาสัมพันธ์</p>
@@ -42,7 +46,7 @@ function Home() {
   </div>
 
   <div className="stat-card">
-    <img src="/src/assets/YL/101.jpg" alt="โปรเจกต์" className="stat-img" />
+    <img src={ylImg} alt="โปรเจกต์" className="stat-img" />
     <div className="stat-body">
       <span className="stat-title">โครงงาน CS</span>
       <p className="stat-desc">Object Detection ด้วย YOLO และ Web App ด้วย Fluter + FastAPI</p>

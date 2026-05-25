@@ -8,14 +8,14 @@ import PY1 from "../assets/PY/222.jpg";
 import PY2 from "../assets/PY/333.jpg";
 import PAO from "../assets/PAO/001.jpg";
 import PAO1 from "../assets/PAO/002.jpg";
-import assets from "../assets/005.png";
+import img005 from "../assets/005.png";
 
 
 // จับคู่ section+id → รูป 
 const imageMap = {
   prayuen: { 1: PY1, 2: PY2 },
   khonkaen: { 1: PAO, 2: PAO1 },
-  project: { 1: label1, 2: assets },
+  project: { 1: label1, 2: img005 },
   history: { 1: null },
 };
 
