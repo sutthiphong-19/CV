@@ -1,14 +1,10 @@
 function Header() {
   return (
-    <div style={{
-      background: "#2c3e50",
-      color: "white",
-      padding: "15px",
-      borderRadius: "10px",
-      textAlign: "center",
-      fontSize: "24px"
-    }}>
-      My Portfolio
+    <div className="site-header">
+      <div className="site-brand">
+        <strong>My Portfolio</strong>
+        <span>Responsive CV / Portfolio</span>
+      </div>
     </div>
   );
 }

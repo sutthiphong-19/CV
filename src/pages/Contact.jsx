@@ -1,78 +1,56 @@
 function Contact() {
-  const cardStyle = {
-    display: "flex", alignItems: "center", gap: 14,
-    border: "1px solid #e5e7eb", borderRadius: 12,
-    padding: "14px 18px", background: "#fff",
-    boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-  };
-
-  const iconStyle = (bg) => ({
-    width: 42, height: 42, borderRadius: "50%",
-    background: bg, display: "flex",
-    alignItems: "center", justifyContent: "center",
-    fontSize: 20, flexShrink: 0,
-  });
-
-  const labelStyle = { margin: 0, fontSize: 12, color: "#9ca3af" };
-  const valueStyle = { margin: 0, fontSize: 15, color: "#111827", fontWeight: 500 };
-
   const openFacebook = () => {
-    window.open("https://www.facebook.com/Suttiphong Phongsraphang", "_blank");
+    window.open("https://www.facebook.com/Suttiphong%20Phongsraphang", "_blank", "noopener,noreferrer");
   };
+
   const openGithub = () => {
-    window.open("https://github.com/sutthiphong-19", "_blank");
+    window.open("https://github.com/sutthiphong-19", "_blank", "noopener,noreferrer");
   };
 
   return (
-    <div style={{ maxWidth: 500, margin: "0 auto", padding: "2rem 1rem", fontFamily: "sans-serif" }}>
+    <main className="contact-page">
+      <section className="contact-shell">
+        <p className="about-badge">Contact</p>
+        <h1 className="contact-title">ติดต่อฉัน</h1>
+        <p className="contact-note">
+          ถ้ามีโปรเจกต์ งานฝึกงาน หรืออยากคุยเรื่องพัฒนาเว็บและ AI ทักมาได้เลยครับ
+        </p>
 
-      <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: "1.5rem", color: "#111827" }}>
-        ติดต่อฉัน
-      </h2>
+        <div className="contact-grid">
+          <article className="contact-card">
+            <div className="contact-icon email">E</div>
+            <div>
+              <p className="contact-label">Email</p>
+              <p className="contact-value">suttiphong1b@email.com</p>
+            </div>
+          </article>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <article className="contact-card">
+            <div className="contact-icon phone">P</div>
+            <div>
+              <p className="contact-label">Phone</p>
+              <p className="contact-value">096-885-8683</p>
+            </div>
+          </article>
 
-        <div style={cardStyle}>
-          <div style={iconStyle("#eef2ff")}>📧</div>
-          <div>
-            <p style={labelStyle}>อีเมล</p>
-            <p style={valueStyle}>suttiphong1b@email.com</p>
-          </div>
+          <button type="button" onClick={openFacebook} className="contact-card is-clickable">
+            <div className="contact-icon facebook">F</div>
+            <div>
+              <p className="contact-label">Facebook</p>
+              <p className="contact-value">suttiphong phongsraphang</p>
+            </div>
+          </button>
+
+          <button type="button" onClick={openGithub} className="contact-card is-clickable">
+            <div className="contact-icon github">G</div>
+            <div>
+              <p className="contact-label">GitHub</p>
+              <p className="contact-value">sutthiphong-19</p>
+            </div>
+          </button>
         </div>
-
-        <div style={cardStyle}>
-          <div style={iconStyle("#f0fdf4")}>📞</div>
-          <div>
-            <p style={labelStyle}>โทรศัพท์</p>
-            <p style={valueStyle}>096-885-8683</p>
-          </div>
-        </div>
-
-        <div
-          onClick={openFacebook}
-          style={{ ...cardStyle, cursor: "pointer" }}
-        >
-          <div style={iconStyle("#eff6ff")}>👤</div>
-          <div>
-            <p style={labelStyle}>Facebook</p>
-            <p style={{ ...valueStyle, color: "#4f46e5" }}>suttiphong phongsraphang</p>
-          </div>
-        </div>
-         {/* GitHub — */}
-        <div onClick={openGithub} style={{ ...cardStyle, cursor: "pointer" }}>
-          <div style={iconStyle("#f3f4f6")}>🐱</div>
-          <div>
-            <p style={labelStyle}>GitHub</p>
-            <p style={{ ...valueStyle, color: "#4f46e5" }}>sutthiphong-19</p>
-          </div>
-        </div>
-
-      </div>
-
-      <p style={{ marginTop: "1.5rem", fontSize: 13, color: "#9ca3af", textAlign: "center" }}>
-        ยินดีรับงานและพูดคุยทุกช่องทางครับ
-      </p>
-    </div>
+      </section>
+    </main>
   );
 }
 

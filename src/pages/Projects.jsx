@@ -48,17 +48,14 @@ function Projects() {
       setDetections(data.detections || []);
       setCompareSplit(50);
     } catch {
-      setError("❌ เชื่อมต่อ Backend ไม่ได้ — ตรวจสอบว่ารัน uvicorn แล้วหรือยัง");
+      setError("เชื่อมต่อ Backend ไม่ได้ - ตรวจสอบว่า uvicorn รันอยู่หรือยัง");
     }
 
     setLoading(false);
   };
 
-  const statusText = loading ? "กำลังประมวลผล" : result ? "พร้อมแสดงผล" : "รออัปโหลดภาพ";
-  const detectionText = detections.length > 0 ? `${detections.length} รายการ` : "ยังไม่มีข้อมูล";
-
   return (
-    <div className="yolo-page">
+    <main className="yolo-page">
       <h2>ตรวจจับวัตถุด้วย YOLO</h2>
       <p className="yolo-desc">
         อัปโหลดรูปภาพแล้วกดตรวจจับ เพื่อดูผลลัพธ์ก่อนและหลังประมวลผลจาก YOLOv11
@@ -75,10 +72,10 @@ function Projects() {
         </div>
         <div className="tip-card">
           <span>3</span>
-          <p>เลื่อน slider เพื่อเทียบ Before / After</p>
+          <p>เลื่อน slider เพื่อเปรียบเทียบ Before / After</p>
         </div>
       </div>
-{/* test */}
+
       <section className="project-showcase">
         <div className="showcase-header">
           <div>
@@ -86,7 +83,7 @@ function Projects() {
             <h3>ตัวอย่างก่อนตรวจจับและหลังตรวจจับ</h3>
           </div>
           <p className="showcase-note">
-            ส่วนนี้ช่วยให้เห็น flow ของงานชัดขึ้น: ภาพต้นฉบับอยู่ฝั่งซ้าย และภาพที่ผ่านการตรวจจับอยู่ฝั่งขวา หารูปเดียวกันไม่ได้ ขอโทษด้วยครับ
+            ส่วนนี้ช่วยให้เห็น flow ของงานชัดขึ้น: ภาพก่อนตรวจจับอยู่ฝั่งซ้าย และภาพหลังผ่านการตรวจจับอยู่ฝั่งขวา
           </p>
         </div>
 
@@ -114,7 +111,6 @@ function Projects() {
             />
           </label>
         </div>
-
       </section>
 
       <div className="upload-zone">
@@ -167,7 +163,7 @@ function Projects() {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 }
 
