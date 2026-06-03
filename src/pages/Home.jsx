@@ -4,86 +4,136 @@ import pyImg from "../assets/PY/111.jpg";
 import paoImg from "../assets/PAO/002.jpg";
 import ylImg from "../assets/YL/101.jpg";
 
+const highlights = [
+  {
+    image: pyImg,
+    alt: "เทศบาลพระยืน",
+    title: "เทศบาลพระยืนเมืองมงคล",
+    description: "จัดการเอกสารดิจิทัลและกิจกรรมต่าง ๆ ของงานป้องกันให้ใช้งานง่ายและเป็นระบบ",
+  },
+  {
+    image: paoImg,
+    alt: "อบจ.ขอนแก่น",
+    title: "องค์การบริหารส่วนจังหวัดขอนแก่น",
+    description: "ดูแลอุปกรณ์คอมพิวเตอร์และจัดทำเอกสารดิจิทัลเพื่อสนับสนุนการทำงานของหน่วยงาน",
+  },
+  {
+    image: ylImg,
+    alt: "โปรเจกต์ CS",
+    title: "โครงงาน CS",
+    description: "ทำ Object Detection ด้วย YOLO และต่อยอดเป็น Web App ด้วย Flutter + FastAPI",
+  },
+];
+
+const skillGroups = [
+  {
+    title: "Frontend",
+    items: ["React", "JavaScript", "HTML", "CSS", "Vite"],
+  },
+  {
+    title: "Backend",
+    items: ["Python", "Node.js", "FastAPI", "Golang"],
+  },
+  {
+    title: "Database",
+    items: ["MySQL", "Docker"],
+  },
+];
+
+const quickFacts = [
+  { label: "สายงาน", value: "Full Stack Developer" },
+  { label: "ความสนใจ", value: "React, Python, AI" },
+  { label: "โฟกัส", value: "Web App ใช้งานจริง" },
+];
+
 function Home() {
   const navigate = useNavigate();
 
   return (
     <main className="home-page">
-      <div className="hero">
+      <section className="hero-panel">
         <div className="avatar-wrap">
-          <div className="avatar-ring"></div>
+          <div className="avatar-ring" />
           <img src={profileImg} alt="Profile" className="avatar" />
         </div>
+
         <div className="hero-text">
-          <h2>สวัสดีครับ  ผม <span>[สุทธิพงษ์ พงษ์สระพัง]</span></h2>
-          <div className="role">Full Stack Developer</div>
-          <p>เป็นนักศึกษาจบใหม่ที่หลงใหลในการพัฒนาเว็บและซอฟต์แวร์
-             มีความสนใจด้านการใช้ React, Python และ Ai เป็นพิเศษ
-             พร้อมที่จะศึกษาเพิ่มเติม มีความรับผิดชอบและพร้อมที่จะสนุกกับการทำงาน</p>
+          <p className="eyebrow">Portfolio / Full Stack Developer</p>
+          <h1>
+            สวัสดีครับ ผม <span>สุทธิพงษ์ พงษ์สระพัง</span>
+          </h1>
+          <p className="hero-description">
+            เป็นนักศึกษาจบใหม่ที่สนใจการพัฒนาเว็บไซต์และซอฟต์แวร์ มีความถนัดด้าน React, Python และ
+            AI พร้อมเรียนรู้เทคโนโลยีใหม่ ๆ เสมอ ชอบการพัฒนาและเรียนรู้สิ่งใหม่ๆตลอด แนะนำข้อมูลติดต่อผมจะมี github ที่เก็บการฝึกของผม
+          </p>
+
           <div className="cta-row">
-            <button onClick={() => navigate("/projects")}>ดูผลงาน</button>
-            <button className="outline" onClick={() => navigate("/contact")}>ข้อมูลการติดต่อ</button>
+            <button type="button" onClick={() => navigate("/projects")}>
+              ดูผลงาน
+            </button>
+            <button type="button" className="outline" onClick={() => navigate("/contact")}>
+              ติดต่อผม
+            </button>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="stats">
-
-  <div className="stat-card">
-    <img src={pyImg} alt="เทศบาลพระยืน" className="stat-img" />
-    <div className="stat-body">
-      <span className="stat-title">เทศบาลพระยืนมิ่งมงคล</span>
-      <p className="stat-desc">จัดทำเอกสารดิจิทัลและโครงการ/กิจกรรมต่างๆ ของงานป้องกันฯ</p>
-    </div>
-  </div>
-
-  <div className="stat-card">
-    <img src={paoImg} alt="อบจ.ขอนแก่น" className="stat-img" />
-    <div className="stat-body">
-      <span className="stat-title">องค์การบริหารส่วนจังหวัดขอนแก่น</span>
-      <p className="stat-desc">ดูแลอุปกรณ์คอมพิวเตอร์และจัดทำเอกสารดิจิทัลเพื่อประชาสัมพันธ์</p>
-    </div>
-  </div>
-
-  <div className="stat-card">
-    <img src={ylImg} alt="โปรเจกต์" className="stat-img" />
-    <div className="stat-body">
-      <span className="stat-title">โครงงาน CS</span>
-      <p className="stat-desc">Object Detection ด้วย YOLO และ Web App ด้วย Fluter + FastAPI</p>
-    </div>
-  </div>
-
-</div>
-
-          <h3 className="section-title">ทักษะหลัก</h3>
-          <div className="skills-wrapper">
-          <div className="skills-section">
-          <h4>Frontend</h4>
-         <div className="skills-grid">
-      {["React", "JavaScript", "CSS", "HTML", "Vite"].map((s) => (
-        <div key={s} className="skill-chip">{s}</div>
-      ))}
-    </div>
-  </div>
-
-  <div className="skills-section">
-    <h4>Backend</h4>
-    <div className="skills-grid">
-      {["Python", "Node.js"].map((s) => (
-        <div key={s} className="skill-chip">{s}</div>
-      ))}
-    </div>
-  </div>
-
-     <div className="skills-section">
-       <h4>Database</h4>
-         <div className="skills-grid">
-          {["MYSQL"].map((s) => (
-           <div key={s} className="skill-chip">{s}</div>
-            ))}
+      <section className="section-block">
+        <div className="section-header">
+          <p className="section-kicker">Quick Facts</p>
+          <h2>สิ่งที่ผมโฟกัสอยู่ตอนนี้</h2>
         </div>
-       </div>
-      </div>
+
+        <div className="facts-grid">
+          {quickFacts.map((fact) => (
+            <article key={fact.label} className="fact-card">
+              <span>{fact.label}</span>
+              <strong>{fact.value}</strong>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-block">
+        <div className="section-header">
+          <p className="section-kicker">Highlights</p>
+          <h2>ประสบการณ์และโปรเจกต์ที่อยากเล่าให้ดู</h2>
+        </div>
+
+        <div className="highlights-grid">
+          {highlights.map((item) => (
+            <article key={item.title} className="stat-card highlight-card">
+              <img src={item.image} alt={item.alt} className="stat-img" />
+              <div className="stat-body">
+                <span className="stat-title">{item.title}</span>
+                <p className="stat-desc">{item.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-block">
+        <div className="section-header">
+          <p className="section-kicker">Skills</p>
+          <h2>ทักษะหลัก</h2>
+        </div>
+
+        <div className="skills-wrapper">
+          {skillGroups.map((group) => (
+            <article key={group.title} className="skills-section">
+              <h3>{group.title}</h3>
+              <div className="skills-grid">
+                {group.items.map((skill) => (
+                  <span key={skill} className="skill-chip">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

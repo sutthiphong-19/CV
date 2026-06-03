@@ -1,4 +1,6 @@
 import { useState } from "react";
+import sampleInputImg from "../assets/YL/test006.jpeg";
+import sampleOutputImg from "../assets/test007.jpeg";
 
 function Projects() {
   const [image, setImage] = useState(null);
@@ -7,6 +9,10 @@ function Projects() {
   const [detections, setDetections] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [compareSplit, setCompareSplit] = useState(50);
+
+  const beforeImage = preview || sampleInputImg;
+  const afterImage = result || sampleOutputImg;
 
   const handleUpload = async (e) => {
     const file = e.target.files[0];
@@ -16,6 +22,7 @@ function Projects() {
     setResult(null);
     setDetections([]);
     setError(null);
+    setCompareSplit(50);
     setImage(file);
   };
 
@@ -38,46 +45,93 @@ function Projects() {
 
       const data = await res.json();
       setResult(`data:image/jpeg;base64,${data.image}`);
-      setDetections(data.detections);
-    } catch (err) {
+      setDetections(data.detections || []);
+      setCompareSplit(50);
+    } catch {
       setError("❌ เชื่อมต่อ Backend ไม่ได้ — ตรวจสอบว่ารัน uvicorn แล้วหรือยัง");
     }
 
     setLoading(false);
   };
 
+  const statusText = loading ? "กำลังประมวลผล" : result ? "พร้อมแสดงผล" : "รออัปโหลดภาพ";
+  const detectionText = detections.length > 0 ? `${detections.length} รายการ` : "ยังไม่มีข้อมูล";
+
   return (
     <div className="yolo-page">
       <h2>ตรวจจับวัตถุด้วย YOLO</h2>
-      <p className="yolo-desc">อัปโหลดรูปภาพแล้วกดตรวจจับเพื่อดูผลลัพธ์จาก YOLOv11</p>
+      <p className="yolo-desc">
+        อัปโหลดรูปภาพแล้วกดตรวจจับ เพื่อดูผลลัพธ์ก่อนและหลังประมวลผลจาก YOLOv11
+      </p>
 
-      {/* Upload Zone */}
+      <div className="project-tips">
+        <div className="tip-card">
+          <span>1</span>
+          <p>อัปโหลดรูปภาพต้นฉบับ</p>
+        </div>
+        <div className="tip-card">
+          <span>2</span>
+          <p>กดตรวจจับเพื่อส่งไป Backend</p>
+        </div>
+        <div className="tip-card">
+          <span>3</span>
+          <p>เลื่อน slider เพื่อเทียบ Before / After</p>
+        </div>
+      </div>
+
+      <section className="project-showcase">
+        <div className="showcase-header">
+          <div>
+            <p className="showcase-kicker">Example Flow</p>
+            <h3>ตัวอย่างก่อนตรวจจับและหลังตรวจจับ</h3>
+          </div>
+          <p className="showcase-note">
+            ส่วนนี้ช่วยให้เห็น flow ของงานชัดขึ้น: ภาพต้นฉบับอยู่ฝั่งซ้าย และภาพที่ผ่านการตรวจจับอยู่ฝั่งขวา หารูปเดียวกันไม่ได้ ขอโทษด้วยครับ
+          </p>
+        </div>
+
+        <div className="compare-shell">
+          <div className="compare-stage" style={{ "--split": `${compareSplit}%` }}>
+            <img className="compare-img compare-before" src={beforeImage} alt="before detection" />
+
+            <div className="compare-after-wrap">
+              <img className="compare-img compare-after" src={afterImage} alt="after detection" />
+            </div>
+
+            <div className="compare-divider" />
+            <div className="compare-tag compare-tag-before">Before</div>
+            <div className="compare-tag compare-tag-after">After</div>
+          </div>
+
+          <label className="compare-control">
+            <span>เลื่อนเพื่อเปรียบเทียบ</span>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={compareSplit}
+              onChange={(e) => setCompareSplit(Number(e.target.value))}
+            />
+          </label>
+        </div>
+
+      </section>
+
       <div className="upload-zone">
         <label className="upload-btn">
-          📁 เลือกรูปภาพ
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleUpload}
-            hidden
-          />
+          📁 เลือกภาพ
+          <input type="file" accept="image/*" onChange={handleUpload} hidden />
         </label>
 
         {preview && (
-          <button
-            className="detect-btn"
-            onClick={handleDetect}
-            disabled={loading}
-          >
+          <button className="detect-btn" onClick={handleDetect} disabled={loading}>
             {loading ? "🔍 กำลังตรวจจับ..." : "🎯 ตรวจจับวัตถุ"}
           </button>
         )}
       </div>
 
-      {/* Error */}
       {error && <p className="yolo-error">{error}</p>}
 
-      {/* Images */}
       {preview && (
         <div className="yolo-result">
           <div className="yolo-img-box">
@@ -86,17 +140,17 @@ function Projects() {
           </div>
           <div className="yolo-img-box">
             <p className="img-label">ผลลัพธ์ YOLO</p>
-            {result
-              ? <img src={result} alt="detected" />
-              : <div className="img-placeholder">
-                  {loading ? "กำลังประมวลผล..." : "กดตรวจจับเพื่อดูผล"}
-                </div>
-            }
+            {result ? (
+              <img src={result} alt="detected" />
+            ) : (
+              <div className="img-placeholder">
+                {loading ? "กำลังประมวลผล..." : "กดตรวจจับเพื่อดูผลลัพธ์"}
+              </div>
+            )}
           </div>
         </div>
       )}
 
-      {/* Detection List */}
       {detections.length > 0 && (
         <div className="detection-list">
           <h3>พบวัตถุทั้งหมด {detections.length} รายการ</h3>
@@ -105,14 +159,9 @@ function Projects() {
               <div key={i} className="detection-item">
                 <span className="det-label">{d.label}</span>
                 <div className="det-bar-wrap">
-                  <div
-                    className="det-bar"
-                    style={{ width: `${d.confidence * 100}%` }}
-                  />
+                  <div className="det-bar" style={{ width: `${d.confidence * 100}%` }} />
                 </div>
-                <span className="confidence">
-                  {(d.confidence * 100).toFixed(0)}%
-                </span>
+                <span className="confidence">{(d.confidence * 100).toFixed(0)}%</span>
               </div>
             ))}
           </div>
