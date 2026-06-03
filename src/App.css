@@ -1119,11 +1119,6 @@ header {
   .timeline-grid {
     grid-template-columns: 1fr;
   }
-  @media (max-width: 900px) {
-  .compare-stage {
-    height: 280px;
-    min-height: 220px;
-  }
 }
 
 @media (max-width: 600px) {
@@ -1132,11 +1127,15 @@ header {
     min-height: 180px;
   }
 }
+ @media (max-width: 900px) {
+  .compare-stage {
+    height: 280px;
+    min-height: 220px;
+  }
 /* =========================================================
    RESPONSIVE GLOBAL - ใช้กับทุกหน้า
 ========================================================= */
 
-/* ---------- Tablet / Small Desktop ---------- */
 @media (max-width: 1024px) {
   header {
     padding: 0.9rem 1.2rem;
@@ -1165,11 +1164,6 @@ header {
     padding: 1.5rem;
   }
 
-  .home-page .hero-panel {
-    gap: 1.5rem;
-    padding: 1.5rem;
-  }
-
   .home-page .facts-grid,
   .home-page .highlights-grid,
   .home-page .skills-wrapper {
@@ -1189,10 +1183,6 @@ header {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .showcase-header {
-    align-items: flex-start;
-  }
-
   .compare-stage {
     height: 320px;
     min-height: 240px;
@@ -1204,8 +1194,6 @@ header {
   }
 }
 
-
-/* ---------- Tablet แนวตั้ง / Mobile ใหญ่ ---------- */
 @media (max-width: 768px) {
   header {
     padding: 0.85rem 1rem;
@@ -1310,6 +1298,7 @@ header {
   .showcase-header {
     flex-direction: column;
     gap: 0.75rem;
+    align-items: flex-start;
   }
 
   .showcase-note {
@@ -1359,8 +1348,6 @@ header {
   }
 }
 
-
-/* ---------- Mobile เล็ก ---------- */
 @media (max-width: 600px) {
   header {
     border-radius: 0 0 14px 14px;
@@ -1416,10 +1403,6 @@ header {
     padding: 0.8rem;
   }
 
-  .showcase-footer {
-    gap: 0.65rem;
-  }
-
   .detection-item {
     grid-template-columns: 1fr;
     gap: 0.4rem;
@@ -1430,8 +1413,6 @@ header {
   }
 }
 
-
-/* ---------- Mobile จอเล็กมาก ---------- */
 @media (max-width: 420px) {
   .side-link {
     font-size: 0.82rem;
