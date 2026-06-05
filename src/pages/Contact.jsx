@@ -13,7 +13,7 @@ function Contact() {
         <p className="about-badge">Contact</p>
         <h1 className="contact-title">ติดต่อฉัน</h1>
         <p className="contact-note">
-          ถ้ามีโปรเจกต์ งานฝึกงาน หรืออยากคุยเรื่องพัฒนาเว็บและ AI ทักมาได้เลยครับ
+          ยินดีรับงานและพูดคุยทุกช่องทางครับ
         </p>
 
         <div className="contact-grid">
@@ -21,7 +21,7 @@ function Contact() {
             <div className="contact-icon email">E</div>
             <div>
               <p className="contact-label">Email</p>
-              <p className="contact-value">suttiphong1b@email.com</p>
+              <p className="contact-value">suttiphong.p@kkumail.com</p>
             </div>
           </article>
 
