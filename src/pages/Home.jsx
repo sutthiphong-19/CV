@@ -1,138 +1,122 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "../hooks/useTranslation";
 import profileImg from "../assets/work.png";
 import pyImg from "../assets/PY/111.jpg";
 import paoImg from "../assets/PAO/002.jpg";
 import ylImg from "../assets/YL/101.jpg";
 
-const highlights = [
-  {
-    image: pyImg,
-    alt: "เทศบาลพระยืน",
-    title: "เทศบาลพระยืนมิ่งมงคล",
-    description: "จัดการทำเอกสารต่างๆ ตั้งแต่บันทึกขอใช้-คำสั่งใช้-รายงานผล-ฎีกา",
-  },
-  {
-    image: paoImg,
-    alt: "อบจ.ขอนแก่น",
-    title: "องค์การบริหารส่วนจังหวัดขอนแก่น",
-    description: "ดูแลอุปกรณ์คอมพิวเตอร์และจัดทำเอกสารดิจิทัลเพื่อสนับสนุนการทำงานของหน่วยงาน",
-  },
-  {
-    image: ylImg,
-    alt: "โปรเจกต์ CS",
-    title: "โครงงาน CS",
-    description: "ทำ Object Detection ด้วย YOLO และต่อยอดเป็น Web App ด้วย Flutter + FastAPI",
-  },
+const highlightItems = [
+  { id: "prayuen", image: pyImg },
+  { id: "khonkaen", image: paoImg },
+  { id: "csProject", image: ylImg },
 ];
 
-const skillGroups = [
-  {
-    title: "Frontend",
-    items: ["React", "JavaScript", "HTML", "CSS", "Vite"],
-  },
-  {
-    title: "Backend",
-    items: ["Python", "Node.js", "FastAPI", "Golang"],
-  },
-  {
-    title: "Database",
-    items: ["MySQL", "Docker"],
-  },
-];
-
-const quickFacts = [
-  { label: "สายงาน", value: "Full Stack Developer" },
-  { label: "ความสนใจ", value: "React, Node.js, Python, AI" },
-  { label: "โฟกัส", value: "การได้มีส่วนร่วมทำงานกับทีมพัฒนา ระบบต่างๆ ที่ใช้งานจริง" },
-];
+const skillGroupIds = ["frontend", "backend", "database"];
+const quickFactIds = ["role", "interests", "focus"];
 
 function Home() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <main className="home-page">
       <section className="hero-panel">
-        <div className="avatar-wrap">
-          <div className="avatar-ring" />
-          <img src={profileImg} alt="Profile" className="avatar" />
-        </div>
-
-        <div className="hero-text">
-          <p className="eyebrow">Portfolio / Full Stack Developer</p>
+        <div className="hero-copy flex flex-column">
+          <p className="eyebrow">{t("home.eyebrow")}</p>
           <h1>
-            สวัสดีครับ ผม <span>สุทธิพงษ์ พงษ์สระพัง</span>
+            {t("home.titlePrefix")} <span>{t("profile.name")}</span>
           </h1>
-          <p className="hero-description">
-            สวัสดีครับ ผมเป็นนักศึกษาจบใหม่ที่มีความมุ่งมั่นด้านการพัฒนาเว็บไซต์และซอฟต์แวร์ มีพื้นฐานแน่นด้าน 
-            Frontend ด้วย React และกำลังศึกษาต่อยอด Backend ด้วย Node.js และ Golang 
-            เป็นคนพร้อมเรียนรู้เทคโนโลยีใหม่ๆ อยู่เสมอ สามารถเริ่มงานได้ทันทีครับ ขอบคุณที่สละเวลาพิจารณาครับ
-          </p>
+          <p className="hero-description">{t("home.heroDescription")}</p>
 
-          <div className="cta-row">
+          <div className="cta-row flex flex-wrap">
             <button type="button" onClick={() => navigate("/projects")}>
-              ดูผลงาน
+              {t("home.ctas.projects")}
             </button>
             <button type="button" className="outline" onClick={() => navigate("/contact")}>
-              สามารถติดต่อผมจากข้อมูลได้ที่นี้ได้เลยครับ
+              {t("home.ctas.contact")}
             </button>
           </div>
         </div>
+
+        <aside className="hero-visual flex flex-column align-items-center">
+          <div className="hero-visual-panel">
+            <div className="avatar-wrap mx-auto">
+              <div className="avatar-ring" />
+              <img
+                src={profileImg}
+                alt={t("profile.name")}
+                className="avatar"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+
+          <div className="hero-facts">
+            <div className="grid">
+              {quickFactIds.map((factId) => (
+                <div key={factId} className="col-12">
+                  <article className="hero-fact h-full">
+                    <span>{t(`home.quickFacts.${factId}.label`)}</span>
+                    <strong>{t(`home.quickFacts.${factId}.value`)}</strong>
+                  </article>
+                </div>
+              ))}
+            </div>
+          </div>
+        </aside>
       </section>
 
       <section className="section-block">
-        <div className="section-header">
-          <p className="section-kicker">Quick Facts</p>
-          <h2>สิ่งที่ผมโฟกัสอยู่ตอนนี้</h2>
+        <div className="section-header flex flex-column">
+          <p className="section-kicker">{t("home.highlights.kicker")}</p>
+          <h2>{t("home.highlights.title")}</h2>
         </div>
 
-        <div className="facts-grid">
-          {quickFacts.map((fact) => (
-            <article key={fact.label} className="fact-card">
-              <span>{fact.label}</span>
-              <strong>{fact.value}</strong>
-            </article>
+        <div className="grid">
+          {highlightItems.map((item) => (
+            <div key={item.id} className="col-12 md:col-6 xl:col-4">
+              <article className="stat-card highlight-card h-full">
+                <img
+                  src={item.image}
+                  alt={t(`home.highlights.items.${item.id}.alt`)}
+                  className="stat-img"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="stat-body">
+                  <span className="stat-title">{t(`home.highlights.items.${item.id}.title`)}</span>
+                  <p className="stat-desc">{t(`home.highlights.items.${item.id}.description`)}</p>
+                </div>
+              </article>
+            </div>
           ))}
         </div>
       </section>
 
       <section className="section-block">
-        <div className="section-header">
-          <p className="section-kicker">Highlights</p>
-          <h2>ประสบการณ์และโปรเจกต์ที่อยากเล่าให้ดู</h2>
-        </div>
-
-        <div className="highlights-grid">
-          {highlights.map((item) => (
-            <article key={item.title} className="stat-card highlight-card">
-              <img src={item.image} alt={item.alt} className="stat-img" />
-              <div className="stat-body">
-                <span className="stat-title">{item.title}</span>
-                <p className="stat-desc">{item.description}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section-block">
-        <div className="section-header">
-          <p className="section-kicker">Skills</p>
-          <h2>ทักษะหลัก</h2>
+        <div className="section-header flex flex-column">
+          <p className="section-kicker">{t("home.skills.kicker")}</p>
+          <h2>{t("home.skills.title")}</h2>
         </div>
 
         <div className="skills-wrapper">
-          {skillGroups.map((group) => (
-            <article key={group.title} className="skills-section">
-              <h3>{group.title}</h3>
-              <div className="skills-grid">
-                {group.items.map((skill) => (
-                  <span key={skill} className="skill-chip">
-                    {skill}
-                  </span>
-                ))}
+          <div className="grid">
+            {skillGroupIds.map((groupId) => (
+              <div key={groupId} className="col-12 md:col-6 xl:col-4">
+                <article className="skills-section h-full">
+                  <h3>{t(`home.skills.groups.${groupId}.title`)}</h3>
+                  <div className="skills-grid flex flex-wrap">
+                    {t(`home.skills.groups.${groupId}.items`, { returnObjects: true }).map((skill) => (
+                      <span key={skill} className="skill-chip">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </article>
               </div>
-            </article>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
     </main>

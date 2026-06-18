@@ -1,13 +1,21 @@
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "../hooks/useTranslation";
 
 function Tabs() {
+  const { t } = useTranslation();
+
   return (
     <div>
-      {/* ปุ่ม Tab */}
       <div style={{ marginBottom: "10px", display: "flex", gap: "10px" }}>
-        <NavLink to="/" end className="tab">หน้าแรก</NavLink>
-        <NavLink to="/about" className="tab">ประวัติ</NavLink>
-        <NavLink to="/contact" className="tab">ข้อมูลการติดต่อ</NavLink>
+        <NavLink to="/" end className="tab">
+          {t("nav.home")}
+        </NavLink>
+        <NavLink to="/about" className="tab">
+          {t("nav.about")}
+        </NavLink>
+        <NavLink to="/contact" className="tab">
+          {t("nav.contact")}
+        </NavLink>
       </div>
     </div>
   );

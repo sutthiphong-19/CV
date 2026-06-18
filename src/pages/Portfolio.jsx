@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "../hooks/useTranslation";
 import portfolioData from "../data/portfolioData";
 
 import label1 from "../assets/label1.jpg";
@@ -18,6 +19,7 @@ const imageMap = {
 function Portfolio() {
   const { section } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const data = portfolioData[section];
 
   if (!data) {
@@ -25,12 +27,12 @@ function Portfolio() {
       <main className="portfolio-page">
         <section className="portfolio-shell">
           <button type="button" onClick={() => navigate("/about")} className="btn-secondary portfolio-back">
-            ← กลับ
+            {t("common.back")}
           </button>
           <div className="portfolio-hero">
-            <p className="about-badge">Portfolio</p>
-            <h1>ไม่พบข้อมูล</h1>
-            <p>ลิงก์นี้อาจไม่ถูกต้อง หรือยังไม่มี portfolio section สำหรับหน้านี้</p>
+            <p className="about-badge">{t("common.portfolio")}</p>
+            <h1>{t("portfolio.notFoundTitle")}</h1>
+            <p>{t("portfolio.notFoundDescription")}</p>
           </div>
         </section>
       </main>
@@ -41,38 +43,42 @@ function Portfolio() {
     <main className="portfolio-page">
       <section className="portfolio-shell">
         <button type="button" onClick={() => navigate("/about")} className="btn-secondary portfolio-back">
-          ← กลับ
+          {t("common.back")}
         </button>
 
         <div className="portfolio-hero">
-          <p className="about-badge">Portfolio</p>
-          <h1>{data.title}</h1>
+          <p className="about-badge">{t("common.portfolio")}</p>
+          <h1>{t(`portfolio.sections.${section}.title`)}</h1>
           <p>
-            <strong>{data.period}</strong> · {data.role}
+            <strong>{t(`portfolio.sections.${section}.period`)}</strong>
+            {" • "}
+            {t("portfolio.roleSeparator")} {t(`portfolio.sections.${section}.role`)}
           </p>
-          <p>{data.overview}</p>
+          <p>{t(`portfolio.sections.${section}.overview`)}</p>
         </div>
 
         <div className="portfolio-content portfolio-grid">
           <section className="portfolio-cards">
-            {data.items.map((item, index) => {
-              const img = imageMap[section]?.[item.id];
+            {data.items.map((itemId, index) => {
+              const img = imageMap[section]?.[itemId];
 
               return (
-                <article key={item.id} className="portfolio-card">
+                <article key={itemId} className="portfolio-card">
                   {img ? (
-                    <img src={img} alt={item.title} />
+                    <img src={img} alt={t(`portfolio.sections.${section}.items.${itemId}.title`)} />
                   ) : (
                     <div className="showcase-placeholder">
-                      <strong>Preview not available</strong>
-                      <span>สำหรับรายการนี้ยังไม่มีรูปภาพตัวอย่าง</span>
+                      <strong>{t("portfolio.notFoundTitle")}</strong>
+                      <span>{t("portfolio.previewUnavailable")}</span>
                     </div>
                   )}
 
                   <div className="portfolio-card-body">
-                    <p className="portfolio-meta">Item {index + 1}</p>
-                    <h3>{item.title}</h3>
-                    <p>{item.desc}</p>
+                    <p className="portfolio-meta">
+                      {t("common.item")} {index + 1}
+                    </p>
+                    <h3>{t(`portfolio.sections.${section}.items.${itemId}.title`)}</h3>
+                    <p>{t(`portfolio.sections.${section}.items.${itemId}.desc`)}</p>
                   </div>
                 </article>
               );
