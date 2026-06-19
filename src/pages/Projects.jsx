@@ -1,224 +1,132 @@
-import { useEffect, useState } from "react";
-import { useTranslation } from "../hooks/useTranslation";
-import sampleInputImg from "../assets/YL/test006.jpeg";
-import sampleOutputImg from "../assets/test007.jpeg";
+import { Link } from "react-router-dom";
+
+const projects = [
+  {
+    number: "01",
+    badge: "WEB",
+    title: "Portfolio Website",
+    type: "Personal Website",
+    description:
+      "เว็บไซต์แฟ้มสะสมงานส่วนตัว ใช้แสดงข้อมูล ประวัติ ผลงาน และช่องทางติดต่อ พร้อมรองรับภาษาไทยและอังกฤษ",
+    stack: ["React", "Vite", "CSS", "Responsive"],
+    status: "พร้อมใช้งาน",
+    link: "/portfolio/portfolio",
+  },
+  {
+    number: "02",
+    badge: "APP",
+    title: "Sport Booking Platform",
+    type: "Web Application",
+    description:
+      "ระบบจองสนามกีฬา มีขั้นตอนเลือกสนาม เลือกเวลา สรุปรายการจอง อัปโหลดสลิป และรอการอนุมัติจากผู้ดูแลระบบ",
+    stack: ["Vue 3", "Pinia", "PrimeVue", "Node.js"],
+    status: "กำลังพัฒนา",
+    link: "/portfolio/sport-booking",
+  },
+  {
+    number: "03",
+    badge: "ERP",
+    title: "Inventory / ERP System",
+    type: "Business System",
+    description:
+      "ระบบจัดการสินค้า พนักงาน ลูกค้า การรับสินค้าเข้า การเบิกสินค้าออก และสรุปข้อมูลสำหรับธุรกิจ",
+    stack: ["Node.js", "Prisma", "PostgreSQL", "MongoDB"],
+    status: "Backend พร้อมต่อยอด",
+    link: "/portfolio/erp",
+  },
+  {
+    number: "04",
+    badge: "AI",
+    title: "AI Object Detection",
+    type: "AI Project",
+    description:
+      "โปรเจกต์ตรวจจับวัตถุจากรูปภาพด้วย AI แสดงผลภาพก่อนและหลังประมวลผล เหมาะสำหรับงาน Computer Vision",
+    stack: ["Python", "YOLO", "AI", "Object Detection"],
+    status: "Prototype",
+    link: "/portfolio/ai",
+  },
+];
 
 function Projects() {
-  const { t } = useTranslation();
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const [result, setResult] = useState(null);
-  const [detections, setDetections] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [compareSplit, setCompareSplit] = useState(50);
-
-  const beforeImage = preview || sampleInputImg;
-  const afterImage = result || sampleOutputImg;
-
-  useEffect(() => {
-    return () => {
-      if (preview?.startsWith("blob:")) {
-        URL.revokeObjectURL(preview);
-      }
-    };
-  }, [preview]);
-
-  const handleUpload = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    setPreview(URL.createObjectURL(file));
-    setResult(null);
-    setDetections([]);
-    setError(null);
-    setCompareSplit(50);
-    setImage(file);
-  };
-
-  const handleDetect = async () => {
-    if (!image) return;
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const formData = new FormData();
-      formData.append("file", image);
-
-      const response = await fetch("http://localhost:8000/detect", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(t("projects.errors.backendResponse"));
-      }
-
-      const data = await response.json();
-      setResult(`data:image/jpeg;base64,${data.image}`);
-      setDetections(data.detections || []);
-      setCompareSplit(50);
-    } catch (caughtError) {
-      setError(caughtError.message || t("projects.errors.backendConnection"));
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
-    <main className="yolo-page">
-      <section className="project-hero">
-        <div className="project-hero-grid">
-          <div className="project-hero-copy">
-            <p className="showcase-kicker">{t("projects.kicker")}</p>
-            <h2>{t("projects.title")}</h2>
-            <p className="project-hero-note">{t("projects.note")}</p>
+    <main className="projects-page">
+      <section className="projects-intro-card">
+        <div className="projects-intro-copy">
+          <p className="about-badge">PROJECTS</p>
 
-            <div className="project-badges">
-              {t("projects.badges", { returnObjects: true }).map((badge) => (
-                <span key={badge} className="tag-pill">
-                  {badge}
-                </span>
-              ))}
-            </div>
+          <h1>
+            ผลงานของผม
+            <span> ที่พร้อมนำเสนอ</span>
+          </h1>
 
-            <div className="project-hero-actions">
-              <label className="upload-btn">
-                {t("projects.actions.chooseImage")}
-                <input type="file" accept="image/*" onChange={handleUpload} hidden />
-              </label>
+          <p>
+            รวมโปรเจกต์ที่ผมพัฒนาและฝึกฝน โดยเน้นงานที่ใช้งานได้จริง
+            มีโครงสร้างชัดเจน อ่านง่าย และสามารถต่อยอดเป็นระบบจริงได้
+          </p>
+        </div>
 
-              {preview && (
-                <button type="button" className="detect-btn" onClick={handleDetect} disabled={loading}>
-                  {loading ? t("projects.actions.detecting") : t("projects.actions.detect")}
-                </button>
-              )}
-            </div>
+        <div className="projects-intro-stats">
+          <div>
+            <span>ทั้งหมด</span>
+            <strong>{projects.length}</strong>
+            <p>โปรเจกต์</p>
           </div>
 
-          <aside className="project-hero-panel">
-            <div className="project-steps">
-              {["one", "two", "three"].map((stepId) => (
-                <article key={stepId} className="project-step">
-                  <span>{t(`projects.steps.${stepId}.label`)}</span>
-                  <strong>{t(`projects.steps.${stepId}.title`)}</strong>
-                  <p>{t(`projects.steps.${stepId}.description`)}</p>
-                </article>
-              ))}
-            </div>
-          </aside>
+          <div>
+            <span>สายงานหลัก</span>
+            <strong>Full Stack</strong>
+            <p>Frontend / Backend / AI</p>
+          </div>
         </div>
       </section>
 
-      <section className="section-block">
-        <div className="section-header">
-          <p className="section-kicker">{t("projects.exampleFlow.kicker")}</p>
-          <h2>{t("projects.exampleFlow.title")}</h2>
+      <section className="projects-work-section">
+        <div className="projects-work-head">
+          <div>
+            <p className="section-kicker">SELECTED WORKS</p>
+            <h2>โปรเจกต์ที่น่าสนใจ</h2>
+          </div>
+
+          <p>
+            เลือกดูรายละเอียดแต่ละโปรเจกต์ เพื่อดูแนวคิด เทคโนโลยี
+            และสิ่งที่ได้เรียนรู้
+          </p>
         </div>
 
-        <div className="project-tips">
-          {t("projects.exampleFlow.items", { returnObjects: true }).map((item, index) => (
-            <div key={item} className="tip-card">
-              <span>{index + 1}</span>
-              <p>{item}</p>
-            </div>
+        <div className="projects-grid-clean">
+          {projects.map((project) => (
+            <article className="project-clean-card" key={project.number}>
+              <div className="project-clean-cover">
+                <div className="project-clean-cover-top">
+                  <span>{project.number}</span>
+                  <small>{project.status}</small>
+                </div>
+
+                <div className="project-clean-badge">{project.badge}</div>
+              </div>
+
+              <div className="project-clean-body">
+                <p className="project-clean-type">{project.type}</p>
+
+                <h3>{project.title}</h3>
+
+                <p>{project.description}</p>
+
+                <div className="project-clean-stack">
+                  {project.stack.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+
+                <Link to={project.link} className="project-clean-link">
+                  <span>ดูรายละเอียด</span>
+                  <strong>→</strong>
+                </Link>
+              </div>
+            </article>
           ))}
         </div>
       </section>
-
-      <section className="project-showcase">
-        <div className="showcase-header">
-          <div>
-            <p className="showcase-kicker">{t("projects.showcase.kicker")}</p>
-            <h3>{t("projects.showcase.title")}</h3>
-          </div>
-          <p className="showcase-note">{t("projects.showcase.note")}</p>
-        </div>
-
-        <div className="compare-shell">
-          <div className="compare-stage" style={{ "--split": `${compareSplit}%` }}>
-            <img
-              className="compare-img compare-before"
-              src={beforeImage}
-              alt={t("projects.showcase.beforeAlt")}
-              loading="lazy"
-              decoding="async"
-            />
-
-            <div className="compare-after-wrap">
-              <img
-                className="compare-img compare-after"
-                src={afterImage}
-                alt={t("projects.showcase.afterAlt")}
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-
-            <div className="compare-divider" />
-            <div className="compare-tag compare-tag-before">{t("projects.showcase.before")}</div>
-            <div className="compare-tag compare-tag-after">{t("projects.showcase.after")}</div>
-          </div>
-
-          <label className="compare-control">
-            <span>{t("projects.showcase.slider")}</span>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={compareSplit}
-              onChange={(event) => setCompareSplit(Number(event.target.value))}
-            />
-          </label>
-        </div>
-      </section>
-
-      {error && <p className="yolo-error">{error}</p>}
-
-      {preview && (
-        <section className="section-block">
-          <div className="section-header">
-            <p className="section-kicker">{t("projects.result.kicker")}</p>
-            <h2>{t("projects.result.title")}</h2>
-          </div>
-
-          <div className="yolo-result">
-            <div className="yolo-img-box">
-              <p className="img-label">{t("projects.result.original")}</p>
-              <img src={preview} alt={t("projects.result.originalAlt")} loading="lazy" decoding="async" />
-            </div>
-
-            <div className="yolo-img-box">
-              <p className="img-label">{t("projects.result.detected")}</p>
-              {result ? (
-                <img src={result} alt={t("projects.result.detectedAlt")} loading="lazy" decoding="async" />
-              ) : (
-                <div className="img-placeholder">
-                  {loading ? t("projects.result.loadingPlaceholder") : t("projects.result.emptyPlaceholder")}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {detections.length > 0 && (
-            <div className="detection-list">
-              <h3>{t("projects.result.detections", { count: detections.length })}</h3>
-              <div className="detection-items">
-                {detections.map((detection, index) => (
-                  <div key={`${detection.label}-${index}`} className="detection-item">
-                    <span className="det-label">{detection.label}</span>
-                    <div className="det-bar-wrap">
-                      <div className="det-bar" style={{ width: `${detection.confidence * 100}%` }} />
-                    </div>
-                    <span className="confidence">{(detection.confidence * 100).toFixed(0)}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </section>
-      )}
     </main>
   );
 }

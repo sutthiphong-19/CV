@@ -4,19 +4,16 @@ function BackButton() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isHomePage = location.pathname === "/";
-
-  if (isHomePage) {
-    return null;
-  }
+  if (location.pathname === "/") return null;
 
   const handleBack = () => {
-    if (window.history.state && window.history.state.idx > 0) {
-      navigate(-1);
+    // ถ้าอยู่หน้ารายละเอียดโปรเจกต์ ให้กลับไปหน้า Projects เสมอ
+    if (location.pathname.startsWith("/portfolio/")) {
+      navigate("/projects", { replace: true });
       return;
     }
 
-    navigate("/");
+    navigate(-1);
   };
 
   return (
