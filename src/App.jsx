@@ -6,15 +6,20 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Projects from "./pages/Projects";
 import Portfolio from "./pages/Portfolio";
+import BackButton from "./components/BackButton";
 import "./App.css";
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
+
       <div className="app-layout">
         <Sidebar />
+
         <div className="main-content">
+          <BackButton />
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
