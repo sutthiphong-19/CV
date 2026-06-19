@@ -58,13 +58,31 @@ const projectDetails = {
 
   "sport-booking": {
     number: "02",
-    badge: "APP",
+    badge: "SBP",
     status: "กำลังพัฒนา",
     title: "Sport Booking Platform",
     type: "Web Application",
     summary:
       "ระบบจองสนามกีฬาออนไลน์ มีขั้นตอนเลือกสนาม เลือกช่วงเวลา ตรวจสอบรายการจอง อัปโหลดสลิป และรอการอนุมัติจากผู้ดูแลระบบ",
     stack: ["Vue 3", "Pinia", "PrimeVue", "Tailwind CSS", "Node.js"],
+    coverImage: img101,  //รูปกรอบหลัก
+    images: [
+    {
+      src: img101,
+      title: "หน้า แรก",
+      desc: "หน้าหลักสำหรับแสดงการประกาศการแข่งขัน",
+    },
+    {
+      src: img101,
+      title: "หน้า หน้าจองสนาม",
+      desc: "หน้าสำหรับแสดงการเลือกเวลาจองสนาม",
+    },
+    {
+      src: img101,
+      title: "หน้า จ่ายตัง",
+      desc: "หน้าสำหรับแสดงการยืนยันการจอง",
+    },
+    ],
     highlights: [
       "เลือกสนามและช่วงเวลาที่ต้องการจอง",
       "ป้องกันการจองเวลาซ้ำ",

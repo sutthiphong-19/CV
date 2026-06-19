@@ -4,6 +4,7 @@ import profileImg from "../assets/work.png";
 import pyImg from "../assets/PY/111.jpg";
 import paoImg from "../assets/PAO/002.jpg";
 import ylImg from "../assets/YL/101.jpg";
+import SkillsSection from "../components/SkillsSection";
 
 const highlightItems = [
   { id: "prayuen", image: pyImg },
@@ -24,7 +25,7 @@ function Home() {
         <div className="hero-copy flex flex-column">
           <p className="eyebrow">{t("home.eyebrow")}</p>
           <h1>
-            {t("home.titlePrefix")} <span>{t("profile.name")}</span>
+          <span>{t("profile.name")}</span>
           </h1>
           <p className="hero-description">{t("home.heroDescription")}</p>
 
@@ -92,32 +93,7 @@ function Home() {
             </div>
           ))}
         </div>
-      </section>
-
-      <section className="section-block">
-        <div className="section-header flex flex-column">
-          <p className="section-kicker">{t("home.skills.kicker")}</p>
-          <h2>{t("home.skills.title")}</h2>
-        </div>
-
-        <div className="skills-wrapper">
-          <div className="grid">
-            {skillGroupIds.map((groupId) => (
-              <div key={groupId} className="col-12 md:col-6 xl:col-4">
-                <article className="skills-section h-full">
-                  <h3>{t(`home.skills.groups.${groupId}.title`)}</h3>
-                  <div className="skills-grid flex flex-wrap">
-                    {t(`home.skills.groups.${groupId}.items`, { returnObjects: true }).map((skill) => (
-                      <span key={skill} className="skill-chip">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              </div>
-            ))}
-          </div>
-        </div>
+        <SkillsSection />
       </section>
     </main>
   );

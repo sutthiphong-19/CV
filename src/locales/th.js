@@ -204,7 +204,7 @@ const th = {
         description: "ส่งข้อมูลไปประมวลผลผ่าน API ที่เชื่อมกับโมเดล YOLO",
       },
       three: {
-        label: "ขั้นตอน 3",
+        label: "Step 3",
         title: "ดูผลลัพธ์",
         description: "เปรียบเทียบภาพ Before / After และดูรายการวัตถุที่ตรวจพบ",
       },

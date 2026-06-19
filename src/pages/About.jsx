@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "../hooks/useTranslation";
+import SkillsSection from "../components/SkillsSection";
+
 
 const timelineIds = ["start", "webapp", "ai"];
 const portfolioRoutes = ["prayuen", "khonkaen", "project", "history"];
@@ -87,6 +89,7 @@ function About() {
           ))}
         </div>
       </section>
+      <SkillsSection />
 
       <section className="about-section">
         <div className="section-header">
