@@ -1,6 +1,6 @@
 const th = {
   app: {
-    brand: "My Portfolio",
+    brand: "แฟ้มสะสมงาน ของฉัน",
     role: "",
   },
   language: {
@@ -17,7 +17,7 @@ const th = {
   },
   common: {
     back: "กลับ",
-    portfolio: "Portfolio",
+    portfolio: "แฟ้มสะสมงาน",
     item: "รายการ",
     view: "ดู",
     close: "ปิด",
@@ -26,7 +26,7 @@ const th = {
     name: "สุทธิพงษ์ พงษ์สระพัง",
   },
   home: {
-    eyebrow: "Portfolio / Full Stack Developer",
+    eyebrow: "แฟ้มสะสมงาน / Full Stack Developer",
     titlePrefix: "สวัสดีครับ ผม",
     heroDescription:
       "ผมเป็นนักศึกษาจบใหม่ที่มุ่งมั่นด้านการพัฒนาเว็บไซต์และซอฟต์แวร์ มีพื้นฐานที่ดีด้าน Frontend ด้วย React และกำลังต่อยอดฝั่ง Backend ด้วย Node.js, Golang และงาน AI พร้อมเรียนรู้เทคโนโลยีใหม่และเริ่มทำงานได้ทันที",
@@ -65,15 +65,15 @@ const th = {
             "ดูแลอุปกรณ์คอมพิวเตอร์และเอกสารดิจิทัล เพื่อสนับสนุนการทำงานของหน่วยงานอย่างเป็นระบบ",
         },
         csProject: {
-          alt: "โครงงาน CS",
-          title: "โครงงาน CS",
+          alt: "โครงงาน วิทยาการ",
+          title: "โครงงาน คอมพิวเตอร์",
           description:
             "พัฒนา Object Detection ด้วย YOLO และต่อยอดเป็น Web App ด้วย FastAPI และ Flutter",
         },
       },
     },
     skills: {
-      kicker: "Skills",
+      kicker: "ทักษะต่างๆ",
       title: "ทักษะหลัก",
       groups: {
         frontend: {
@@ -92,7 +92,7 @@ const th = {
     },
   },
   about: {
-    badge: "About Me",
+    badge: "เกี่ยวกับ ฉัน",
     heroTitle: "ประวัติและเส้นทางการเรียนรู้ของผม",
     intro1:
       "ผมชื่อสุทธิพงษ์ พงษ์สระพัง เป็นคนจังหวัดขอนแก่น และสนใจงานพัฒนาซอฟต์แวร์ที่เชื่อมโยงกับการใช้งานจริง ชอบงานที่ได้แก้ปัญหาและเห็นผลลัพธ์ชัดเจน",
@@ -194,17 +194,17 @@ const th = {
     },
     steps: {
       one: {
-        label: "Step 1",
+        label: "ขั้นตอน 1",
         title: "อัปโหลดรูป",
         description: "เลือกรูปภาพต้นฉบับจากเครื่องเพื่อเริ่มการตรวจจับ",
       },
       two: {
-        label: "Step 2",
+        label: "ขั้นตอน 2",
         title: "ส่งเข้า Backend",
         description: "ส่งข้อมูลไปประมวลผลผ่าน API ที่เชื่อมกับโมเดล YOLO",
       },
       three: {
-        label: "Step 3",
+        label: "ขั้นตอน 3",
         title: "ดูผลลัพธ์",
         description: "เปรียบเทียบภาพ Before / After และดูรายการวัตถุที่ตรวจพบ",
       },
