@@ -84,7 +84,7 @@ const en = {
       groups: {
         frontend: {
           title: "Frontend",
-          items: ["React", "JavaScript", "HTML", "CSS", "Vite"],
+          items: ["React", "JavaScript", "HTML", "CSS", "Vite", "Vue.js"],
         },
         backend: {
           title: "Backend",

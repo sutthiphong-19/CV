@@ -78,7 +78,7 @@ const th = {
       groups: {
         frontend: {
           title: "ส่วนหน้า",
-          items: ["React", "JavaScript", "HTML", "CSS", "Vite"],
+          items: ["React", "JavaScript", "HTML", "CSS", "Vite", "Vue.js"],
         },
         backend: {
           title: "ส่วนหลัง",
