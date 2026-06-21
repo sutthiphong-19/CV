@@ -1,14 +1,26 @@
 import { useNavigate } from "react-router-dom";
+import { FiArrowRight, FiCode, FiCompass, FiLayers, FiMail, FiUser } from "react-icons/fi";
 import { useTranslation } from "../hooks/useTranslation";
 import SkillsSection from "../components/SkillsSection";
 
 
 const timelineIds = ["start", "webapp", "ai"];
-const portfolioRoutes = ["prayuen", "khonkaen", "project", "history"];
+const summaryItems = [
+  { key: "focus", icon: FiCode },
+  { key: "style", icon: FiLayers },
+  { key: "goal", icon: FiCompass },
+];
+const portfolioRoutes = [
+  { key: "prayuen", icon: FiUser },
+  { key: "khonkaen", icon: FiLayers },
+  { key: "project", icon: FiCode },
+  { key: "history", icon: FiMail },
+];
 
 function About() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const focusInterests = t("about.focus.interests", { returnObjects: true });
 
   const openLink = () => {
     window.open(
@@ -28,6 +40,20 @@ function About() {
             <p className="about-intro">{t("about.intro1")}</p>
             <p className="about-intro">{t("about.intro2")}</p>
 
+            <div className="about-summary-strip">
+              {summaryItems.map(({ key, icon: Icon }) => (
+                <article key={key} className="about-summary-item">
+                  <div className="about-summary-icon">
+                    <Icon aria-hidden="true" />
+                  </div>
+                  <div>
+                    <span>{t(`about.stats.${key}.label`)}</span>
+                    <strong>{t(`about.stats.${key}.title`)}</strong>
+                  </div>
+                </article>
+              ))}
+            </div>
+
             <div className="about-actions">
               <button type="button" onClick={openLink} className="primary">
                 {t("about.actions.more")}
@@ -39,8 +65,21 @@ function About() {
           </div>
 
           <aside className="about-hero-panel">
+            <div className="about-panel-heading">
+              <p className="card-kicker">{t("about.focus.kicker")}</p>
+              <h2>{t("about.focus.title")}</h2>
+            </div>
+
+            <div className="interest-list">
+              {focusInterests.map((item) => (
+                <span key={item} className="interest-pill">
+                  {item}
+                </span>
+              ))}
+            </div>
+
             <div className="about-stats">
-              {["focus", "style", "goal"].map((key) => (
+              {summaryItems.map(({ key }) => (
                 <article key={key} className="about-stat">
                   <span>{t(`about.stats.${key}.label`)}</span>
                   <strong>{t(`about.stats.${key}.title`)}</strong>
@@ -58,13 +97,28 @@ function About() {
           <h2>{t("about.story.title")}</h2>
           <p>{t("about.story.paragraph1")}</p>
           <p>{t("about.story.paragraph2")}</p>
+
+          <div className="about-story-points">
+            {summaryItems.map(({ key, icon: Icon }) => (
+              <article key={key} className="story-point">
+                <div className="story-point-icon">
+                  <Icon aria-hidden="true" />
+                </div>
+                <div>
+                  <strong>{t(`about.stats.${key}.title`)}</strong>
+                  <p>{t(`about.stats.${key}.description`)}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </article>
 
         <article className="about-card about-focus">
           <p className="card-kicker">{t("about.focus.kicker")}</p>
           <h2>{t("about.focus.title")}</h2>
+          <p className="about-focus-note">{t("about.intro2")}</p>
           <div className="interest-list">
-            {t("about.focus.interests", { returnObjects: true }).map((item) => (
+            {focusInterests.map((item) => (
               <span key={item} className="interest-pill">
                 {item}
               </span>
@@ -80,8 +134,9 @@ function About() {
         </div>
 
         <div className="timeline-grid">
-          {timelineIds.map((itemId) => (
+          {timelineIds.map((itemId, index) => (
             <article key={itemId} className="timeline-card">
+              <span className="timeline-step">{String(index + 1).padStart(2, "0")}</span>
               <span className="timeline-year">{t(`about.timeline.items.${itemId}.year`)}</span>
               <h3>{t(`about.timeline.items.${itemId}.title`)}</h3>
               <p>{t(`about.timeline.items.${itemId}.description`)}</p>
@@ -97,15 +152,22 @@ function About() {
           <h2>{t("about.portfolio.title")}</h2>
         </div>
 
-        <div className="about-actions portfolio-actions">
-          {portfolioRoutes.map((route) => (
+        <div className="portfolio-link-grid">
+          {portfolioRoutes.map(({ key, icon: Icon }) => (
             <button
-              key={route}
+              key={key}
               type="button"
-              onClick={() => navigate(`/portfolio/${route}`)}
-              className="secondary"
+              onClick={() => navigate(`/portfolio/${key}`)}
+              className="portfolio-link-card"
             >
-              {t(`about.portfolio.${route}`)}
+              <div className="portfolio-link-icon">
+                <Icon aria-hidden="true" />
+              </div>
+              <div className="portfolio-link-copy">
+                <span>{t("common.portfolio")}</span>
+                <strong>{t(`about.portfolio.${key}`)}</strong>
+              </div>
+              <FiArrowRight className="portfolio-link-arrow" aria-hidden="true" />
             </button>
           ))}
         </div>

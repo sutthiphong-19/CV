@@ -8,6 +8,12 @@ const en = {
     th: "TH",
     en: "EN",
   },
+  theme: {
+    label: "Theme",
+    light: "Light",
+    dark: "Dark",
+    toggle: "Toggle theme",
+  },
   nav: {
     menu: "Main Menu",
     home: "Home",
@@ -26,7 +32,7 @@ const en = {
     name: "Sutthiphong Phongsraphang",
   },
   home: {
-    eyebrow: "Portfolio / Full Stack Developer",
+    eyebrow: "Portfolio / Developer",
     titlePrefix: "Hello, I'm",
     heroDescription:
       "I am a recent graduate focused on website and software development, with solid frontend experience in React and growing backend skills in Node.js, Golang, and AI. I enjoy learning new technologies and I am ready to contribute immediately.",
@@ -37,7 +43,7 @@ const en = {
     quickFacts: {
       role: {
         label: "Role",
-        value: "Full Stack Developer",
+        value: "Developer",
       },
       interests: {
         label: "Interests",
@@ -179,6 +185,8 @@ const en = {
       phone: "Phone",
       facebook: "Facebook",
       github: "GitHub",
+      tiktok: "tiktok",
+      line: "line",
     },
   },
   projects: {

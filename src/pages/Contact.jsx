@@ -134,7 +134,7 @@ function Contact() {
               <div className="contact-icon line">L</div>
               <div>
                 <p className="line-qr-kicker">LINE</p>
-                <h2 className="line-qr-title">สแกน QR เพื่อติดต่อผม</h2>
+                <h2 className="line-qr-title">สแกน QR เพื่อเพิ่มเพื่อน</h2>
               </div>
             </div>
 

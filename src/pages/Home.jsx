@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "../hooks/useTranslation";
 import profileImg from "../assets/work.png";
 import pyImg from "../assets/PY/111.jpg";
@@ -9,10 +9,11 @@ import SkillsSection from "../components/SkillsSection";
 const highlightItems = [
   { id: "prayuen", image: pyImg },
   { id: "khonkaen", image: paoImg },
-  { id: "csProject", image: ylImg },
+
+  // คลิกการ์ดนี้แล้วไปหน้า 04 AI Project
+  { id: "csProject", image: ylImg, to: "/portfolio/project" },
 ];
 
-const skillGroupIds = ["frontend", "backend", "database"];
 const quickFactIds = ["role", "interests", "focus"];
 
 function Home() {
@@ -24,16 +25,23 @@ function Home() {
       <section className="hero-panel">
         <div className="hero-copy flex flex-column">
           <p className="eyebrow">{t("home.eyebrow")}</p>
+
           <h1>
-          <span>{t("profile.name")}</span>
+            <span>{t("profile.name")}</span>
           </h1>
+
           <p className="hero-description">{t("home.heroDescription")}</p>
 
           <div className="cta-row flex flex-wrap">
             <button type="button" onClick={() => navigate("/projects")}>
               {t("home.ctas.projects")}
             </button>
-            <button type="button" className="outline" onClick={() => navigate("/contact")}>
+
+            <button
+              type="button"
+              className="outline"
+              onClick={() => navigate("/contact")}
+            >
               {t("home.ctas.contact")}
             </button>
           </div>
@@ -75,8 +83,8 @@ function Home() {
         </div>
 
         <div className="grid">
-          {highlightItems.map((item) => (
-            <div key={item.id} className="col-12 md:col-6 xl:col-4">
+          {highlightItems.map((item) => {
+            const cardContent = (
               <article className="stat-card highlight-card h-full">
                 <img
                   src={item.image}
@@ -85,14 +93,39 @@ function Home() {
                   loading="lazy"
                   decoding="async"
                 />
+
                 <div className="stat-body">
-                  <span className="stat-title">{t(`home.highlights.items.${item.id}.title`)}</span>
-                  <p className="stat-desc">{t(`home.highlights.items.${item.id}.description`)}</p>
+                  <span className="stat-title">
+                    {t(`home.highlights.items.${item.id}.title`)}
+                  </span>
+
+                  <p className="stat-desc">
+                    {t(`home.highlights.items.${item.id}.description`)}
+                  </p>
                 </div>
               </article>
-            </div>
-          ))}
+            );
+
+            return (
+              <div key={item.id} className="col-12 md:col-6 xl:col-4">
+                {item.to ? (
+                  <Link
+                    to={item.to}
+                    className="highlight-card-link"
+                    aria-label={`ไปยัง ${t(
+                      `home.highlights.items.${item.id}.title`
+                    )}`}
+                  >
+                    {cardContent}
+                  </Link>
+                ) : (
+                  cardContent
+                )}
+              </div>
+            );
+          })}
         </div>
+
         <SkillsSection />
       </section>
     </main>

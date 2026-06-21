@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import imgBB from "../assets/work.png";
 
 const projects = [
   {
@@ -11,6 +12,7 @@ const projects = [
     stack: ["React", "Vite", "CSS", "Responsive"],
     status: "พร้อมใช้งาน",
     link: "/portfolio/portfolio",
+    image: imgBB,
   },
   {
     number: "02",
@@ -96,7 +98,19 @@ function Projects() {
         <div className="projects-grid-clean">
           {projects.map((project) => (
             <article className="project-clean-card" key={project.number}>
-              <div className="project-clean-cover">
+              <div className={`project-clean-cover ${project.image ? "has-image" : ""}`}>
+                {project.image && (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="project-clean-image"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+
+                <div className="project-clean-cover-overlay" />
+
                 <div className="project-clean-cover-top">
                   <span>{project.number}</span>
                   <small>{project.status}</small>

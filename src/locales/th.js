@@ -26,7 +26,7 @@ const th = {
     name: "สุทธิพงษ์ พงษ์สระพัง",
   },
   home: {
-    eyebrow: "แฟ้มสะสมงาน / Full Stack Developer",
+    eyebrow: "แฟ้มสะสมงาน / นักพัฒนา",
     titlePrefix: "สวัสดีครับ ผม",
     heroDescription:
       "ผมเป็นนักศึกษาจบใหม่ที่มุ่งมั่นด้านการพัฒนาเว็บไซต์และซอฟต์แวร์ มีพื้นฐานที่ดีด้าน Frontend ด้วย React และกำลังต่อยอดฝั่ง Backend ด้วย Node.js, Golang และงาน AI พร้อมเรียนรู้เทคโนโลยีใหม่และเริ่มทำงานได้ทันที",
@@ -37,7 +37,7 @@ const th = {
     quickFacts: {
       role: {
         label: "สายงาน",
-        value: "Full Stack Developer",
+        value: "นักพัฒนา",
       },
       interests: {
         label: "ความสนใจ",
@@ -68,7 +68,7 @@ const th = {
           alt: "โครงงาน วิทยาการ",
           title: "โครงงาน คอมพิวเตอร์",
           description:
-            "พัฒนา Object Detection ด้วย YOLO และต่อยอดเป็น Web App ด้วย FastAPI และ Flutter",
+            "พัฒนา การตรวจจับวัตถุ ด้วย YOLO และต่อยอดเป็น เว็บแอป ด้วย FastAPI และ Flutter",
         },
       },
     },
@@ -77,15 +77,15 @@ const th = {
       title: "ทักษะหลัก",
       groups: {
         frontend: {
-          title: "Frontend",
+          title: "ส่วนหน้า",
           items: ["React", "JavaScript", "HTML", "CSS", "Vite"],
         },
         backend: {
-          title: "Backend",
+          title: "ส่วนหลัง",
           items: ["Python", "Node.js", "FastAPI", "Golang"],
         },
         database: {
-          title: "Database",
+          title: "ฐานข้อมูล",
           items: ["MySQL", "Docker"],
         },
       },
@@ -97,38 +97,38 @@ const th = {
     intro1:
       "ผมชื่อสุทธิพงษ์ พงษ์สระพัง เป็นคนจังหวัดขอนแก่น และสนใจงานพัฒนาซอฟต์แวร์ที่เชื่อมโยงกับการใช้งานจริง ชอบงานที่ได้แก้ปัญหาและเห็นผลลัพธ์ชัดเจน",
     intro2:
-      "แนวทางที่ผมถนัดคือการพัฒนา Web Application ด้วย React รวมถึง Backend API ด้วย Python และ FastAPI พร้อมความสนใจด้าน AI โดยเฉพาะงาน Object Detection",
+      "แนวทางที่ผมถนัดคือการพัฒนา แอปพลิเคชันเว็บ ด้วย React รวมถึง ส่วนหลัง API ด้วย Python และ FastAPI พร้อมความสนใจด้าน AI โดยเฉพาะงาน การตรวจจับวัตถุ",
     actions: {
       more: "ดูข้อมูลเพิ่มเติม",
       contact: "ติดต่อผม",
     },
     stats: {
       focus: {
-        label: "Focus",
-        title: "Web / Backend / AI",
+        label: "จุดสนใจ",
+        title: "เว็บ / ส่วนหลัง / AI",
         description: "สร้างงานที่ต่อยอดได้จริง และเติบโตไปพร้อมกับระบบที่กำลังพัฒนา",
       },
       style: {
-        label: "Working Style",
+        label: "สไตล์การทำงาน",
         title: "เรียนรู้ไว ทำงานเป็นระบบ",
         description: "ชอบงานที่มีขั้นตอนชัดเจน สื่อสารกับทีมได้ดี และพร้อมปรับตัวตามโจทย์",
       },
       goal: {
-        label: "Goal",
+        label: "เป้าหมาย",
         title: "พร้อมเริ่มงานทันที",
         description: "มุ่งมั่นพัฒนาตัวเองอย่างต่อเนื่อง และรับผิดชอบงานร่วมกับทีมอย่างเต็มที่",
       },
     },
     story: {
-      kicker: "Story",
+      kicker: "เรื่องราว",
       title: "สิ่งที่สนใจและอยากศึกษาต่อ",
       paragraph1:
         "ผมเริ่มสนใจด้านการเขียนโปรแกรมตั้งแต่อายุ 18 ปี และค่อย ๆ เรียนรู้ด้วยตัวเองผ่านการทำโปรเจกต์จริง สิ่งที่ทำให้สนุกคือการเห็นไอเดียกลายเป็นระบบที่นำไปใช้ได้ ไม่ว่าจะเป็นเว็บไซต์ ระบบหลังบ้าน หรือการต่อยอดไปสู่งาน AI",
       paragraph2:
-        "จุดแข็งของผมคือการผสาน Frontend, Backend และกระบวนการคิดเชิงระบบเข้าด้วยกัน เพื่อทำให้งานไม่ใช่แค่ใช้งานได้ แต่ยังดูแลง่ายและพร้อมขยายต่อ",
+        "จุดแข็งของผมคือการผสาน ส่วนหน้า, ส่วนหลัง และกระบวนการคิดเชิงระบบเข้าด้วยกัน เพื่อทำให้งานไม่ใช่แค่ใช้งานได้ แต่ยังดูแลง่ายและพร้อมขยายต่อ",
     },
     focus: {
-      kicker: "Focus",
+      kicker: "จุดสนใจ",
       title: "สิ่งที่ผมตั้งใจพัฒนา",
       interests: [
         "Web Application",
@@ -138,7 +138,7 @@ const th = {
       ],
     },
     timeline: {
-      kicker: "Timeline",
+      kicker: "ไทม์ไลน์",
       title: "เส้นทางที่พาผมมาถึงจุดนี้",
       items: {
         start: {
@@ -162,7 +162,7 @@ const th = {
       },
     },
     portfolio: {
-      kicker: "Portfolio",
+      kicker: "ผลงาน",
       title: "ถ้าอยากดูผลงานแยกเป็นหมวด",
       prayuen: "เทศบาลพระยืนมิ่งมงคล",
       khonkaen: "อบจ.ขอนแก่น",
@@ -171,14 +171,16 @@ const th = {
     },
   },
   contact: {
-    badge: "Contact",
-    title: "ติดต่อผม",
+    badge: "ติดต่อ",
+    title: "ติดต่อ",
     note: "ยินดีพูดคุยเรื่องงาน โปรเจกต์ใหม่ หรือโอกาสร่วมงานในทุกช่องทางครับ",
     items: {
       email: "อีเมล",
       phone: "โทรศัพท์",
-      facebook: "Facebook",
-      github: "GitHub",
+      facebook: "เฟสบุ๊ค",
+      github: "กิตฮับ",
+      tiktok: "ติ๊กต๊อก",
+      line: "ไลน์",
     },
   },
   projects: {
@@ -230,7 +232,7 @@ const th = {
       afterAlt: "ภาพหลังตรวจจับ",
     },
     result: {
-      kicker: "Result",
+      kicker: "ผลลัพธ์",
       title: "ผลลัพธ์การตรวจจับ",
       original: "ภาพต้นฉบับ",
       detected: "ผลลัพธ์ YOLO",

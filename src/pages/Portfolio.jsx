@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "../hooks/useTranslation";
 import portfolioData from "../data/portfolioData";
+import { useState } from "react";
 
 import label1 from "../assets/label1.jpg";
 import PY1 from "../assets/PY/222.jpg";
@@ -9,6 +10,11 @@ import PAO from "../assets/PAO/001.jpg";
 import PAO1 from "../assets/PAO/002.jpg";
 import img005 from "../assets/005.png";
 import img101 from "../assets/101.jpg";
+import imgB2 from "../assets/01/B2.jpg";
+import imgB1 from "../assets/01/B1.jpg";
+import imgB3 from "../assets/01/B3.jpg";
+import imgBB from "../assets/work.png";
+import imgB4 from "../assets/01/B4.jpg";
 
 const imageMap = {
   prayuen: { 1: PY1, 2: PY2 },
@@ -27,14 +33,45 @@ const projectDetails = {
     summary:
       "เว็บไซต์แฟ้มสะสมงานส่วนตัว สำหรับนำเสนอประวัติ ทักษะ ผลงาน และช่องทางติดต่อ โดยออกแบบให้ดูสะอาด อ่านง่าย และรองรับการใช้งานบนมือถือ",
     stack: ["React", "Vite", "CSS", "Responsive", "React Router"],
-    coverImage: img101,
+    coverImage: imgBB,
     
     images: [
     {
-      src: img101,
-      title: "หน้า Portfolio",
-      desc: "หน้าหลักสำหรับแสดงผลงานและข้อมูลส่วนตัว",
-    },
+    src: imgB2,
+    title: "หน้า Portfolio",
+    desc: "หน้าหลักสำหรับแสดงผลงานและข้อมูลส่วนตัว",
+    detail:
+      "หน้านี้ออกแบบเพื่อแนะนำตัวเองแบบมืออาชีพ แสดงชื่อ ตำแหน่ง ความสนใจ และปุ่มติดต่อ เพื่อให้ผู้เข้าชมเข้าใจภาพรวมได้รวดเร็ว",
+    points: [
+      "แสดงข้อมูลส่วนตัวแบบกระชับ",
+      "มีปุ่มนำทางไปหน้าผลงานและติดต่อ",
+      "ออกแบบโทนสีเข้มให้ดูทันสมัย",
+    ],
+  },
+  {
+    src: imgB3,
+    title: "หน้า ประวัติ",
+    desc: "หน้าสำหรับแสดงประวัติเส้นทางการเรียนรู้ของผม",
+    detail:
+      "หน้านี้ใช้เล่าเส้นทางการเรียนรู้ ประสบการณ์ และทักษะที่เกี่ยวข้องกับสายงาน Developer",
+    points: [
+      "แสดงประวัติการเรียนรู้",
+      "จัดหมวดหมู่ทักษะให้อ่านง่าย",
+      "ช่วยให้ผู้ชมเข้าใจพื้นฐานและแนวทางการพัฒนา",
+    ],
+ },
+{
+  src: imgB4,
+  title: "หน้า ผลงาน",
+  desc: "หน้าสำหรับแสดงโปรเจกต์ต่าง ๆ",
+  detail:
+    "หน้านี้รวบรวมผลงานที่เคยพัฒนา โดยแยกเป็นการ์ดโปรเจกต์ สามารถกดดูรายละเอียดแต่ละงานได้",
+  points: [
+    "แสดงรายการโปรเจกต์แบบการ์ด",
+    "มีสถานะและเทคโนโลยีที่ใช้",
+    "เชื่อมไปยังหน้ารายละเอียดของแต่ละโปรเจกต์",
+  ],
+},
   ],
 
     highlights: [
@@ -161,105 +198,155 @@ const projectDetails = {
 
 function ProjectDetail({ project }) {
   const navigate = useNavigate();
+  const [selectedImage, setSelectedImage] = useState(null);
 
   return (
-    <main className="project-detail-page">
-      <section className="project-detail-hero">
-        <div className="project-detail-cover">
-          <div className="project-detail-cover-top">
-            <span>{project.number}</span>
-            <small>{project.status}</small>
+    <>
+      <main className="project-detail-page">
+        <section className="project-detail-hero">
+          <div className="project-detail-cover">
+            <div className="project-detail-cover-top">
+              <span>{project.number}</span>
+              <small>{project.status}</small>
+            </div>
+
+            {project.coverImage ? (
+              <div className="project-detail-cover-image">
+                <img src={project.coverImage} alt={project.title} />
+              </div>
+            ) : (
+              <div className="project-detail-badge">{project.badge}</div>
+            )}
           </div>
 
-          {project.coverImage ? (
-        <div className="project-detail-cover-image">
-          <img src={project.coverImage} alt={project.title} />
-        </div>
-      ) : (
-        <div className="project-detail-badge">{project.badge}</div>
-      )}
-        </div>
+          <div className="project-detail-copy">
+            <p className="about-badge">{project.type}</p>
 
-        <div className="project-detail-copy">
-          <p className="about-badge">{project.type}</p>
+            <h1>{project.title}</h1>
 
-          <h1>{project.title}</h1>
+            <p>{project.summary}</p>
 
-          <p>{project.summary}</p>
+            <div className="project-detail-stack">
+              {project.stack.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </div>
 
-          <div className="project-detail-stack">
-            {project.stack.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
+            <button
+              type="button"
+              className="project-detail-back-link"
+              onClick={() => navigate("/projects", { replace: true })}
+            >
+              ← กลับไปหน้า Projects
+            </button>
           </div>
+        </section>
 
-          <button
-            type="button"
-            className="project-detail-back-link"
-            onClick={() => navigate("/projects", { replace: true })}
+        {project.images?.length > 0 && (
+          <section className="project-detail-gallery">
+            <div className="project-detail-section-head">
+              <p className="section-kicker">PREVIEW</p>
+              <h2>รูปภาพประกอบโปรเจกต์</h2>
+            </div>
+
+            <div className="project-detail-gallery-grid">
+              {project.images.map((image, index) => (
+                <button
+                  type="button"
+                  className="project-detail-image-card project-detail-image-button"
+                  key={`${image.title}-${index}`}
+                  onClick={() => setSelectedImage(image)}
+                >
+                  <img src={image.src} alt={image.title} />
+
+                  <div>
+                    <h3>{image.title}</h3>
+                    <p>{image.desc}</p>
+                    <span className="project-detail-click-hint">
+                      คลิกดูรายละเอียด →
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section className="project-detail-grid">
+          <article className="project-detail-card project-detail-card-large">
+            <p className="section-kicker">HIGHLIGHTS</p>
+            <h2>จุดเด่นของโปรเจกต์</h2>
+
+            <ul>
+              {project.highlights.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+
+          <article className="project-detail-card">
+            <p className="section-kicker">MY ROLE</p>
+            <h2>หน้าที่ที่ทำ</h2>
+
+            <ul>
+              {project.roles.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+
+          <article className="project-detail-card">
+            <p className="section-kicker">LEARNING</p>
+            <h2>สิ่งที่ได้เรียนรู้</h2>
+
+            <ul>
+              {project.learned.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </article>
+        </section>
+      </main>
+
+      {selectedImage && (
+        <div
+          className="project-preview-modal"
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div
+            className="project-preview-modal-card"
+            onClick={(event) => event.stopPropagation()}
           >
-            ← กลับไปหน้า Projects
-          </button>
-        </div>
-      </section>
+            <button
+              type="button"
+              className="project-preview-close"
+              onClick={() => setSelectedImage(null)}
+              aria-label="ปิดรายละเอียดรูปภาพ"
+            >
+              ×
+            </button>
 
-      {project.images?.length > 0 && (
-  <section className="project-detail-gallery">
-    <div className="project-detail-section-head">
-      <p className="section-kicker">PREVIEW</p>
-      <h2>รูปภาพประกอบโปรเจกต์</h2>
-    </div>
+            <img src={selectedImage.src} alt={selectedImage.title} />
 
-    <div className="project-detail-gallery-grid">
-      {project.images.map((image) => (
-        <article className="project-detail-image-card" key={image.title}>
-          <img src={image.src} alt={image.title} />
+            <div className="project-preview-content">
+              <p className="section-kicker">PREVIEW DETAIL</p>
+              <h2>{selectedImage.title}</h2>
+              <p>{selectedImage.detail || selectedImage.desc}</p>
 
-          <div>
-            <h3>{image.title}</h3>
-            <p>{image.desc}</p>
+              {selectedImage.points?.length > 0 && (
+                <ul>
+                  {selectedImage.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
-        </article>
-      ))}
-    </div>
-  </section>
-)}
-
-      <section className="project-detail-grid">
-        <article className="project-detail-card project-detail-card-large">
-          <p className="section-kicker">HIGHLIGHTS</p>
-          <h2>จุดเด่นของโปรเจกต์</h2>
-
-          <ul>
-            {project.highlights.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-
-        <article className="project-detail-card">
-          <p className="section-kicker">MY ROLE</p>
-          <h2>หน้าที่ที่ทำ</h2>
-
-          <ul>
-            {project.roles.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-
-        <article className="project-detail-card">
-          <p className="section-kicker">LEARNING</p>
-          <h2>สิ่งที่ได้เรียนรู้</h2>
-
-          <ul>
-            {project.learned.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-      </section>
-    </main>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -268,7 +355,6 @@ function Portfolio() {
   const section = params.section || params.slug || params.id || "portfolio";
   const navigate = useNavigate();
   const { t } = useTranslation();
-  console.log("Portfolio section =", section);
 
   const projectDetail = projectDetails[section];
 
@@ -348,11 +434,13 @@ function Portfolio() {
                     <p className="portfolio-meta">
                       {t("common.item")} {index + 1}
                     </p>
+
                     <h3>
                       {t(
                         `portfolio.sections.${section}.items.${itemId}.title`
                       )}
                     </h3>
+
                     <p>
                       {t(`portfolio.sections.${section}.items.${itemId}.desc`)}
                     </p>
