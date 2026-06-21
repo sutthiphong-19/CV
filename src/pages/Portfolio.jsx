@@ -14,7 +14,7 @@ import imgB2 from "../assets/01/B2.jpg";
 import imgB1 from "../assets/01/B1.jpg";
 import imgB3 from "../assets/01/B3.jpg";
 import imgBB from "../assets/work.png";
-import imgB4 from "../assets/01/B4.jpg";
+import imgB4 from "../assets/01/B4-test.jpg";
 
 const imageMap = {
   prayuen: { 1: PY1, 2: PY2 },
