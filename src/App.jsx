@@ -8,7 +8,10 @@ import Projects from "./pages/Projects";
 import Portfolio from "./pages/Portfolio";
 import BackButton from "./components/BackButton";
 import "./App.css";
-
+import Game from "./pages/Game";
+import SnakeGame from "./pages/games/SnakeGame";
+import QuizGame from "./pages/games/QuizGame";
+import TypingGame from "./pages/games/TypingGame";
 function App() {
   return (
     <BrowserRouter>
@@ -26,6 +29,10 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/portfolio/:section" element={<Portfolio />} />
+            <Route path="/game" element={<Game />} />
+            <Route path="/game/snake" element={<SnakeGame />} />
+            <Route path="/game/quiz" element={<QuizGame />} />
+            <Route path="/game/typing" element={<TypingGame />} />
           </Routes>
         </div>
       </div>

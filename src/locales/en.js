@@ -20,7 +20,16 @@ const en = {
     about: "About",
     projects: "Projects",
     contact: "Contact",
+    game: "Mini Game",
+    menu: "Menu",
   },
+  game: {
+  badge: "React + Python FastAPI",
+  subtitle: "Games connected to a Python FastAPI backend",
+  snake: "Snake Game",
+  quiz: "Quiz Game",
+  typing: "Typing Speed",
+},
   common: {
     back: "Back",
     portfolio: "Portfolio",

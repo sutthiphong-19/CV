@@ -1,6 +1,14 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FiArrowRight, FiClock, FiCompass, FiMail, FiMoon, FiSun } from "react-icons/fi";
+import {
+  FiArrowRight,
+  FiClock,
+  FiCompass,
+  FiMail,
+  FiMoon,
+  FiPlayCircle,
+  FiSun,
+} from "react-icons/fi";
 import { useTranslation } from "../hooks/useTranslation";
 import { useTheme } from "../hooks/useTheme";
 
@@ -29,6 +37,12 @@ const routeMeta = {
     detailKey: "contact.title",
     icon: FiMail,
   },
+  "/game": {
+    titleKey: "nav.game",
+    labelKey: "game.badge",
+    detailKey: "game.subtitle",
+    icon: FiPlayCircle,
+  },
 };
 
 function Header() {
@@ -37,6 +51,7 @@ function Header() {
   const location = useLocation();
   const headerRef = useRef(null);
   const isThai = i18n.language === "th";
+
   const themeLabels = isThai
     ? {
         label: "ธีม",
@@ -52,6 +67,8 @@ function Header() {
       };
 
   const isPortfolioRoute = location.pathname.startsWith("/portfolio/");
+  const currentRouteMeta = routeMeta[location.pathname] || routeMeta["/"];
+
   const meta = isPortfolioRoute
     ? {
         title: t("common.portfolio"),
@@ -60,10 +77,10 @@ function Header() {
         Icon: FiCompass,
       }
     : {
-        title: t(routeMeta[location.pathname]?.titleKey || "nav.home"),
-        label: t(routeMeta[location.pathname]?.labelKey || "home.eyebrow"),
-        detail: t(routeMeta[location.pathname]?.detailKey || "home.quickFacts.focus.value"),
-        Icon: routeMeta[location.pathname]?.icon || FiCompass,
+        title: t(currentRouteMeta.titleKey),
+        label: t(currentRouteMeta.labelKey),
+        detail: t(currentRouteMeta.detailKey),
+        Icon: currentRouteMeta.icon,
       };
 
   const { title, Icon } = meta;

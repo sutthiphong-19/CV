@@ -14,7 +14,16 @@ const th = {
     about: "ประวัติ",
     projects: "ผลงาน",
     contact: "ติดต่อ",
+    game: "Mini Game",
+    menu: "เมนู",
   },
+  game: {
+  badge: "React + Python FastAPI",
+  subtitle: "เกมที่เชื่อมต่อ Backend ด้วย Python FastAPI",
+  snake: "Snake Game",
+  quiz: "Quiz Game",
+  typing: "Typing Speed",
+},
   common: {
     back: "กลับ",
     portfolio: "แฟ้มสะสมงาน",

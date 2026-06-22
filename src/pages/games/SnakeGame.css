@@ -1,0 +1,336 @@
+.snake-page {
+  min-height: 100vh;
+  padding: 88px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(34, 197, 94, 0.2), transparent 32%),
+    radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.18), transparent 34%),
+    linear-gradient(135deg, #020617 0%, #0f172a 55%, #111827 100%);
+  color: #f8fafc;
+}
+
+.snake-layout {
+  width: min(1180px, 100%);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 22px;
+}
+
+.snake-card {
+  border-radius: 30px;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  box-shadow: 0 26px 90px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+}
+
+.snake-main-card {
+  padding: 30px;
+}
+
+.snake-rank-card {
+  padding: 24px;
+  align-self: start;
+}
+
+.snake-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.snake-badge {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 12px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, 0.14);
+  color: #4ade80;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.snake-badge.blue {
+  background: rgba(56, 189, 248, 0.14);
+  color: #38bdf8;
+}
+
+.snake-top h1,
+.snake-rank-card h2 {
+  margin: 0;
+  letter-spacing: -0.04em;
+}
+
+.snake-top h1 {
+  font-size: clamp(34px, 5vw, 56px);
+}
+
+.snake-top p {
+  margin: 8px 0 0;
+  color: #94a3b8;
+  line-height: 1.7;
+}
+
+.snake-score {
+  min-width: 126px;
+  height: fit-content;
+  padding: 16px;
+  border-radius: 22px;
+  text-align: center;
+  background: rgba(2, 6, 23, 0.68);
+  border: 1px solid rgba(148, 163, 184, 0.22);
+}
+
+.snake-score span {
+  display: block;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.snake-score strong {
+  font-size: 38px;
+  color: #38bdf8;
+}
+
+.snake-player-row {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.snake-player-row label {
+  flex: 1;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.snake-player-row input {
+  width: 100%;
+  margin-top: 8px;
+  padding: 13px 14px;
+  border-radius: 16px;
+  outline: none;
+  color: #f8fafc;
+  background: rgba(2, 6, 23, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+}
+
+.snake-status {
+  min-width: 120px;
+  padding: 13px 16px;
+  border-radius: 999px;
+  text-align: center;
+  font-weight: 900;
+  background: rgba(148, 163, 184, 0.14);
+  color: #cbd5e1;
+}
+
+.snake-status.running {
+  background: rgba(34, 197, 94, 0.14);
+  color: #86efac;
+}
+
+.snake-status.paused {
+  background: rgba(250, 204, 21, 0.14);
+  color: #fde68a;
+}
+
+.snake-status.gameover {
+  background: rgba(239, 68, 68, 0.14);
+  color: #fca5a5;
+}
+
+.snake-board {
+  width: min(620px, 100%);
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  display: grid;
+  gap: 3px;
+  padding: 10px;
+  border-radius: 24px;
+  background:
+    linear-gradient(rgba(2, 6, 23, 0.9), rgba(2, 6, 23, 0.9)) padding-box,
+    linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(56, 189, 248, 0.75)) border-box;
+  border: 2px solid transparent;
+}
+
+.snake-cell {
+  border-radius: 6px;
+  background: rgba(30, 41, 59, 0.72);
+  transition: background 0.08s ease;
+}
+
+.snake-cell.is-snake {
+  background: linear-gradient(135deg, #22c55e, #14b8a6);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.24);
+}
+
+.snake-cell.is-head {
+  background: linear-gradient(135deg, #facc15, #22c55e);
+  box-shadow: 0 0 18px rgba(250, 204, 21, 0.42);
+}
+
+.snake-cell.is-food {
+  background: linear-gradient(135deg, #fb7185, #ef4444);
+  border-radius: 50%;
+  box-shadow: 0 0 18px rgba(248, 113, 113, 0.52);
+}
+
+.snake-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+}
+
+.snake-primary-btn,
+.snake-secondary-btn,
+.snake-mobile-controls button {
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: 950;
+  transition: 0.2s ease;
+}
+
+.snake-primary-btn,
+.snake-secondary-btn {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 18px;
+}
+
+.snake-primary-btn {
+  background: linear-gradient(135deg, #22c55e, #06b6d4);
+}
+
+.snake-secondary-btn {
+  background: rgba(51, 65, 85, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+}
+
+.snake-primary-btn:hover,
+.snake-secondary-btn:hover,
+.snake-mobile-controls button:hover {
+  transform: translateY(-2px);
+}
+
+.snake-mobile-controls {
+  display: none;
+  margin-top: 18px;
+  text-align: center;
+}
+
+.snake-mobile-controls div {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.snake-mobile-controls button {
+  width: 58px;
+  height: 48px;
+  border-radius: 16px;
+  background: rgba(51, 65, 85, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  font-size: 20px;
+}
+
+.snake-hint {
+  margin: 18px 0 0;
+  color: #94a3b8;
+  text-align: center;
+  line-height: 1.7;
+}
+
+.snake-rank-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.snake-rank-item {
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 13px;
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.snake-rank-item span {
+  color: #38bdf8;
+  font-weight: 900;
+}
+
+.snake-rank-item strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.snake-rank-item b {
+  color: #4ade80;
+}
+
+.snake-empty {
+  margin: 0;
+  color: #94a3b8;
+}
+
+@media (max-width: 980px) {
+  .snake-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .snake-rank-card {
+    order: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .snake-page {
+    padding: 64px 16px;
+  }
+
+  .snake-main-card,
+  .snake-rank-card {
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .snake-top,
+  .snake-player-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .snake-status {
+    width: 100%;
+  }
+
+  .snake-board {
+    gap: 2px;
+    padding: 8px;
+    border-radius: 20px;
+  }
+
+  .snake-cell {
+    border-radius: 4px;
+  }
+
+  .snake-mobile-controls {
+    display: block;
+  }
+}
