@@ -7,8 +7,8 @@ import ylImg from "../assets/YL/101.jpg";
 import SkillsSection from "../components/SkillsSection";
 
 const highlightItems = [
-  { id: "prayuen", image: pyImg },
-  { id: "khonkaen", image: paoImg },
+  { id: "prayuen", image: pyImg, to: "/portfolio/prayuen"},
+  { id: "khonkaen", image: paoImg, to: "/portfolio/khonkaen"},
 
   // คลิกการ์ดนี้แล้วไปหน้า 04 AI Project
   { id: "csProject", image: ylImg, to: "/portfolio/project" },

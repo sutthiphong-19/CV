@@ -15,6 +15,16 @@ import imgB1 from "../assets/01/B1.jpg";
 import imgB3 from "../assets/01/B3.jpg";
 import imgBB from "../assets/work.png";
 import imgB4 from "../assets/01/B4-test.jpg";
+import YL1 from "../assets/YL/confusion_matrix_normalized.png";
+import YL2 from "../assets/YL/confusion_matrix.png";
+import YL3 from "../assets/YL/F1_curve (1).png";
+import YL4 from "../assets/YL/F1_curve.png";
+import YL5 from "../assets/YL/labels_correlogram.jpg";
+import YL6 from "../assets/YL/labels.jpg";
+import YL7 from "../assets/YL/results.png";
+import YL8 from "../assets/YL/train_batch0.jpg";
+import YL9 from "../assets/YL/train_batch1.jpg";
+import YL10 from "../assets/YL/train_batch2.jpg";
 
 const imageMap = {
   prayuen: { 1: PY1, 2: PY2 },
@@ -176,6 +186,64 @@ const projectDetails = {
     summary:
       "โปรเจกต์ตรวจจับวัตถุจากรูปภาพด้วย AI แสดงภาพก่อนและหลังประมวลผล เหมาะสำหรับงาน Computer Vision และการทดลองโมเดลตรวจจับวัตถุ",
     stack: ["Python", "YOLO", "AI", "Object Detection", "Computer Vision"],
+    coverImage: img101,
+    images: [
+    {
+      src: img101,
+      title: "หน้าการเตรียมข้อมูล",
+      desc: "หน้าหลักสำหรับแสดงทำ",
+    },
+    {
+      src: YL1,
+      title: "หน้าการเตรียมข้อมูล",
+      desc: "หน้าหลักสำหรับแสดงทำ",
+    },
+    {
+      src: YL2,
+      title: "หน้าการเตรียมข้อมูล",
+      desc: "หน้าหลักสำหรับแสดงทำ",
+    },
+    {
+      src: YL3,
+      title: "หน้าการเตรียมข้อมูล",
+      desc: "หน้าหลักสำหรับแสดงทำ",
+    },
+    {
+      src: YL4,
+      title: "หน้าการเตรียมข้อมูล",
+      desc: "หน้าหลักสำหรับแสดงทำ",
+    },
+    {
+      src: YL5,
+      title: "หน้าการเตรียมข้อมูล",
+      desc: "หน้าหลักสำหรับแสดงทำ",
+    },
+    {
+      src: YL6,
+      title: "หน้าการเตรียมข้อมูล",
+      desc: "หน้าหลักสำหรับแสดงทำ",
+    },
+    {
+      src: YL7,
+      title: "หน้าการเตรียมข้อมูล",
+      desc: "หน้าหลักสำหรับแสดงทำ",
+    },
+    {
+      src: YL8,
+      title: "หน้าการเตรียมข้อมูล",
+      desc: "หน้าหลักสำหรับแสดงทำ",
+    },
+    {
+      src: YL9,
+      title: "หน้าการเตรียมข้อมูล",
+      desc: "หน้าหลักสำหรับแสดงทำ",
+    },
+    {
+      src: YL10,
+      title: "หน้าการเตรียมข้อมูล",
+      desc: "หน้าหลักสำหรับแสดงทำ",
+    },
+    ],
     highlights: [
       "อัปโหลดรูปภาพเพื่อประมวลผล",
       "แสดงผลภาพก่อนและหลังตรวจจับ",

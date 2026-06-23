@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import imgBB from "../assets/work.png";
+import YL8 from "../assets/YL/train_batch0.jpg";
 
 const projects = [
   {
@@ -46,6 +47,7 @@ const projects = [
     stack: ["Python", "YOLO", "AI", "Object Detection"],
     status: "Prototype",
     link: "/portfolio/ai",
+    image: YL8,
   },
 ];
 

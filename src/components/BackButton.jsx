@@ -1,18 +1,38 @@
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
+const BACK_CLICK_KEY = "back-button-clicked-once";
 
 function BackButton() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const [hasClickedBack, setHasClickedBack] = useState(() => {
+    return sessionStorage.getItem(BACK_CLICK_KEY) === "true";
+  });
+
+  useEffect(() => {
+    // ถ้ากลับมาหน้าแรกแล้ว ให้ reset การนับใหม่
+    if (location.pathname === "/") {
+      sessionStorage.removeItem(BACK_CLICK_KEY);
+      setHasClickedBack(false);
+    }
+  }, [location.pathname]);
+
   if (location.pathname === "/") return null;
 
   const handleBack = () => {
-    // ถ้าอยู่หน้ารายละเอียดโปรเจกต์ ให้กลับไปหน้า Projects เสมอ
-    if (location.pathname.startsWith("/portfolio/")) {
-      navigate("/projects", { replace: true });
+    // กดครั้งที่ 2 เป็นต้นไป ให้กลับหน้าแรก
+    if (hasClickedBack) {
+      sessionStorage.removeItem(BACK_CLICK_KEY);
+      setHasClickedBack(false);
+      navigate("/", { replace: true });
       return;
     }
 
+    // กดครั้งแรก ให้ย้อนกลับหน้าก่อนหน้า
+    sessionStorage.setItem(BACK_CLICK_KEY, "true");
+    setHasClickedBack(true);
     navigate(-1);
   };
 
