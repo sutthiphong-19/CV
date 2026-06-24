@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useTranslation } from "../hooks/useTranslation";
 import portfolioData from "../data/portfolioData";
 import { useState } from "react";
@@ -25,6 +25,14 @@ import YL7 from "../assets/YL/results.png";
 import YL8 from "../assets/YL/train_batch0.jpg";
 import YL9 from "../assets/YL/train_batch1.jpg";
 import YL10 from "../assets/YL/train_batch2.jpg";
+import S1 from "../assets/sport/1.jpg";
+import S2 from "../assets/sport/2.jpg";
+import S3 from "../assets/sport/3.jpg";
+import S4 from "../assets/sport/4.jpg";
+import S5 from "../assets/sport/5.jpg";
+import S6 from "../assets/sport/6.jpg";
+import S7 from "../assets/sport/7.jpg";
+import S8 from "../assets/sport/8.jpg";
 
 const imageMap = {
   prayuen: { 1: PY1, 2: PY2 },
@@ -109,25 +117,65 @@ const projectDetails = {
     status: "กำลังพัฒนา",
     title: "Sport Booking Platform",
     type: "Web Application",
+    focus: "Case Study / Booking Experience",
     summary:
       "ระบบจองสนามกีฬาออนไลน์ มีขั้นตอนเลือกสนาม เลือกช่วงเวลา ตรวจสอบรายการจอง อัปโหลดสลิป และรอการอนุมัติจากผู้ดูแลระบบ",
     stack: ["Vue 3", "Pinia", "PrimeVue", "Tailwind CSS", "Node.js"],
+    demoUrl: "https://sport-booking-x2r6.onrender.com/",
+    stats: [
+      { label: "Booking Flow", value: "4 Steps" },
+      { label: "Main Stack", value: "Vue + Node" },
+      { label: "Target", value: "Mobile First" },
+    ],
     coverImage: img101,  //รูปกรอบหลัก
     images: [
     {
-      src: img101,
-      title: "หน้า แรก",
-      desc: "หน้าหลักสำหรับแสดงการประกาศการแข่งขัน",
+    src: img101,
+    title: "หน้า แรก",
+    desc: "หน้าสำหรับแสดงประวัติเส้นทางการเรียนรู้ของผม",
+    detail:
+      "หน้านี้ใช้เล่าเส้นทางการเรียนรู้ ประสบการณ์ และทักษะที่เกี่ยวข้องกับสายงาน Developer",
+    points: [
+      "แสดงข้อมูลจัดแข่ง",
+      "จัดหมวดหมู่ทักษะให้อ่านง่าย",
+      "ช่วยให้ผู้ชมเข้าใจพื้นฐานและแนวทางการพัฒนา",
+    ],
+ },
+    {
+      src: S1,
+      title: "หน้า หน้าเลือกจองสนามฟุตบอล",
+      desc: "หน้าสำหรับแสดงการเลือกจองสนามฟุตบอล ",
+      detail:
+      "หน้านี้ใช้เล่าเส้นทางการเรียนรู้ ประสบการณ์ และทักษะที่เกี่ยวข้องกับสายงาน Developer",
+    points: [
+      "บอกสนามฟุตบอลมี 3 สนาม",
+      "บอกตำแหน่งที่ตั้ง",
+      "ราคาเช่าต่อชั่วโมง",
+    ],
     },
     {
-      src: img101,
-      title: "หน้า หน้าจองสนาม",
-      desc: "หน้าสำหรับแสดงการเลือกเวลาจองสนาม",
+      src: S4,
+      title: "หน้า การรายละเอียดจองสนาม",
+      desc: "หน้าสำหรับแสดงรายละเอียดการจอง",
+      detail:
+      "หน้านี้ใช้เล่าเส้นทางการเรียนรู้ ประสบการณ์ และทักษะที่เกี่ยวข้องกับสายงาน Developer",
+    points: [
+      "แสดง",
+      "แสดง",
+      "แสดง",
+    ],
     },
     {
-      src: img101,
-      title: "หน้า จ่ายตัง",
-      desc: "หน้าสำหรับแสดงการยืนยันการจอง",
+      src: S5,
+      title: "หน้า สรุปการจองสนาม",
+      desc: "หน้าสำหรับแสดงรายละเอียดการจอง",
+      detail:
+      "หน้านี้ใช้เล่าเส้นทางการเรียนรู้ ประสบการณ์ และทักษะที่เกี่ยวข้องกับสายงาน Developer",
+    points: [
+      "แสดงรายการจอง สนามที่ วันที่ เวลา ราคา ค่ามัดจำ ยอดรวม",
+      "แสดง",
+      "แสดง",
+    ],
     },
     ],
     highlights: [
@@ -265,7 +313,6 @@ const projectDetails = {
 };
 
 function ProjectDetail({ project }) {
-  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
 
   return (
@@ -289,6 +336,7 @@ function ProjectDetail({ project }) {
 
           <div className="project-detail-copy">
             <p className="about-badge">{project.type}</p>
+            {project.focus && <p className="project-detail-focus">{project.focus}</p>}
 
             <h1>{project.title}</h1>
 
@@ -300,13 +348,30 @@ function ProjectDetail({ project }) {
               ))}
             </div>
 
-            <button
-              type="button"
-              className="project-detail-back-link"
-              onClick={() => navigate("/projects", { replace: true })}
-            >
-              ← กลับไปหน้า Projects
-            </button>
+            {project.stats?.length > 0 && (
+              <div className="project-detail-stats">
+                {project.stats.map((item) => (
+                  <article className="project-detail-stat" key={`${item.label}-${item.value}`}>
+                    <span>{item.label}</span>
+                    <strong>{item.value}</strong>
+                  </article>
+                ))}
+              </div>
+            )}
+
+            {project.demoUrl && (
+              <div className="project-detail-actions">
+                <a
+                  href={project.demoUrl}
+                  className="project-detail-back-link"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  เปิดเดโมจริง ↗
+                </a>
+              </div>
+            )}
+
           </div>
         </section>
 
@@ -421,7 +486,6 @@ function ProjectDetail({ project }) {
 function Portfolio() {
   const params = useParams();
   const section = params.section || params.slug || params.id || "portfolio";
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const projectDetail = projectDetails[section];
@@ -436,14 +500,6 @@ function Portfolio() {
     return (
       <main className="portfolio-page">
         <section className="portfolio-shell">
-          <button
-            type="button"
-            onClick={() => navigate("/projects")}
-            className="btn-secondary portfolio-back"
-          >
-            {t("common.back")}
-          </button>
-
           <div className="portfolio-hero">
             <p className="about-badge">{t("common.portfolio")}</p>
             <h1>{t("portfolio.notFoundTitle")}</h1>
@@ -457,14 +513,6 @@ function Portfolio() {
   return (
     <main className="portfolio-page">
       <section className="portfolio-shell">
-        <button
-          type="button"
-          onClick={() => navigate("/about")}
-          className="btn-secondary portfolio-back"
-        >
-          {t("common.back")}
-        </button>
-
         <div className="portfolio-hero">
           <p className="about-badge">{t("common.portfolio")}</p>
           <h1>{t(`portfolio.sections.${section}.title`)}</h1>
