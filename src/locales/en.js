@@ -314,6 +314,10 @@ const en = {
             title: "Web Application with React + FastAPI",
             desc: "Created a full-stack web app with React on the frontend and FastAPI on the backend.",
           },
+          3: {
+          title: "SoftwareEngineering",
+          desc: "ระบบจร้านค้าออนไลน์ วิทยาลัยการคอมพิวเตอร์",
+        },
         },
       },
       history: {

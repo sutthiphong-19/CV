@@ -33,12 +33,18 @@ import S5 from "../assets/sport/5.jpg";
 import S6 from "../assets/sport/6.jpg";
 import S7 from "../assets/sport/7.jpg";
 import S8 from "../assets/sport/8.jpg";
+import PrestaShop from "../assets/PrestaShop/ps.jpg";
 
 const imageMap = {
   prayuen: { 1: PY1, 2: PY2 },
   khonkaen: { 1: PAO, 2: PAO1 },
-  project: { 1: label1, 2: img005 },
+  project: { 1: label1, 2: img005, 3: PrestaShop },
   history: { 1: null },
+};
+const projectLinkMap = {
+  project: {
+    3: "https://github.com/kunlasatriC/G6_Sec3_SoftwareEngineering",
+  },
 };
 
 const projectDetails = {
@@ -529,41 +535,46 @@ function Portfolio() {
           <section className="portfolio-cards">
             {data.items.map((itemId, index) => {
               const img = imageMap[section]?.[itemId];
+              const externalLink = projectLinkMap[section]?.[itemId];
+              const CardTag = externalLink ? "a" : "article";
+
 
               return (
-                <article key={itemId} className="portfolio-card">
-                  {img ? (
-                    <img
-                      src={img}
-                      alt={t(
-                        `portfolio.sections.${section}.items.${itemId}.title`
-                      )}
-                    />
-                  ) : (
-                    <div className="showcase-placeholder">
-                      <strong>{t("portfolio.notFoundTitle")}</strong>
-                      <span>{t("portfolio.previewUnavailable")}</span>
+                <CardTag
+                  key={itemId}
+                  className={`portfolio-card ${externalLink ? "portfolio-card-link" : ""}`}
+                  {...(externalLink
+                    ? {
+                        href: externalLink,
+                        target: "_blank",
+                        rel: "noreferrer",
+                      }
+                    : {})}
+                >
+                   {img ? (
+                      <img
+                        src={img}
+                        alt={t(`portfolio.sections.${section}.items.${itemId}.title`)}
+                      />
+                    ) : (
+                      <div className="showcase-placeholder">
+                        <strong>{t("portfolio.notFoundTitle")}</strong>
+                        <span>{t("portfolio.previewUnavailable")}</span>
+                      </div>
+                    )}
+
+                    <div className="portfolio-card-body">
+                      <p className="portfolio-meta">
+                        {t("common.item")} {index + 1}
+                      </p>
+
+                      <h3>{t(`portfolio.sections.${section}.items.${itemId}.title`)}</h3>
+
+                      <p>{t(`portfolio.sections.${section}.items.${itemId}.desc`)}</p>
                     </div>
-                  )}
-
-                  <div className="portfolio-card-body">
-                    <p className="portfolio-meta">
-                      {t("common.item")} {index + 1}
-                    </p>
-
-                    <h3>
-                      {t(
-                        `portfolio.sections.${section}.items.${itemId}.title`
-                      )}
-                    </h3>
-
-                    <p>
-                      {t(`portfolio.sections.${section}.items.${itemId}.desc`)}
-                    </p>
-                  </div>
-                </article>
-              );
-            })}
+                  </CardTag>
+                );
+              })}
           </section>
         </div>
       </section>

@@ -6,7 +6,7 @@ const portfolioData = {
     items: [1],
   },
   project: {
-    items: [1, 2],
+    items: [1, 2, 3],
   },
   history: {
     items: [1],
