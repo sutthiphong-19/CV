@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   FiArrowRight,
@@ -72,14 +72,47 @@ const quickMetaKeys = ["role", "interests"];
 function Sidebar() {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return undefined;
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+
+    const handlePointerDown = (event) => {
+      if (!sidebarRef.current?.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("touchstart", handlePointerDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("touchstart", handlePointerDown);
+    };
+  }, [isMenuOpen]);
 
   return (
-    <aside className={`sidebar${isMenuOpen ? " is-open" : ""}`}>
+    <aside className={`sidebar${isMenuOpen ? " is-open" : ""}`} ref={sidebarRef}>
       <div className="side-menu-head">
-        <div className="side-menu-copy">
-          <p className="side-label">{t("nav.menu")}</p>
-          <strong className="side-heading">{t("common.portfolio")}</strong>
-          <span className="side-subheading">{t("home.quickFacts.role.value")}</span>
+        <div className="side-menu-head-main">
+          <div className="side-menu-badge">SP</div>
+
+          <div className="side-menu-copy">
+            <p className="side-label">{t("nav.menu")}</p>
+            <strong className="side-heading">{t("common.portfolio")}</strong>
+            <span className="side-subheading">{t("home.quickFacts.role.value")}</span>
+          </div>
         </div>
 
         <button
@@ -90,13 +123,15 @@ function Sidebar() {
           aria-expanded={isMenuOpen}
           aria-controls="sidebar-navigation"
         >
-          <span />
-          <span />
-          <span />
+          <span className="side-more-button-icon" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
         </button>
       </div>
 
-      <div className="sidebar-shell">
+      <div className="sidebar-shell" role="dialog" aria-modal={isMenuOpen ? "true" : undefined}>
         <section className="side-panel side-overview-panel">
           <div className="side-overview-head">
             <div className="side-overview-badge">SP</div>
