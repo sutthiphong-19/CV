@@ -15,27 +15,54 @@ const en = {
     toggle: "Toggle theme",
   },
   nav: {
-    menu: "Main Menu",
+    menu: "Menu",
     home: "Home",
     about: "About",
     projects: "Projects",
     contact: "Contact",
     game: "Mini Game",
-    menu: "Menu",
   },
   game: {
-  badge: "React + Python FastAPI",
-  subtitle: "Games connected to a Python FastAPI backend",
-  snake: "Snake Game",
-  quiz: "Quiz Game",
-  typing: "Typing Speed",
-},
+    badge: "React + Python FastAPI",
+    subtitle: "Games connected to a Python FastAPI backend",
+    snake: "Snake Game",
+    quiz: "Quiz Game",
+    typing: "Typing Speed",
+  },
+  gameHub: {
+    badge: "REACT + PYTHON FASTAPI",
+    title: "Mini Games Playground",
+    description:
+      "A small collection of games built to showcase frontend logic, REST API integration, and Python FastAPI backend work.",
+    play: "Play this game",
+    items: {
+      snake: {
+        badge: "React Logic",
+        title: "Snake Game",
+        description:
+          "Control the snake with keyboard input and save scores through a Python FastAPI backend.",
+      },
+      quiz: {
+        badge: "FastAPI Quiz",
+        title: "Quiz Game",
+        description:
+          "Answer programming questions while the backend validates answers and tracks the score.",
+      },
+      typing: {
+        badge: "WPM Test",
+        title: "Typing Speed",
+        description:
+          "Measure programming typing speed and submit WPM results to the backend leaderboard.",
+      },
+    },
+  },
   common: {
     back: "Back",
     portfolio: "Portfolio",
     item: "Item",
     view: "View",
     close: "Close",
+    goTo: "Go to {{target}}",
   },
   profile: {
     name: "Sutthiphong Phongsraphang",
@@ -152,6 +179,40 @@ const en = {
         "Easy-to-use UI",
       ],
     },
+    hobbies: {
+      kicker: "LIFE OUTSIDE CODE",
+      title: "Life Outside Code",
+      badge: "SPORTS HOBBY",
+      headline: "Playing sports helps me build discipline, focus, and consistency.",
+      description:
+        "Outside of work, I enjoy sports because they sharpen quick decisions, teamwork, and self-discipline.",
+      valuesKicker: "WHAT IT SAYS ABOUT ME",
+      valuesTitle: "How this hobby shapes the way I work",
+      valuesNote:
+        "For me, sports are not just a hobby. They are a place to practice habits and mindset that carry directly into real work.",
+      gallery: {
+        mainAlt: "Sports activity",
+        focusAlt: "Additional sports activity",
+        momentAlt: "Another sports moment",
+      },
+      highlights: {
+        discipline: {
+          title: "Discipline and consistency",
+          description:
+            "It trains me to improve step by step, repeat the fundamentals, and keep my own standards high.",
+        },
+        energy: {
+          title: "Energy and agility",
+          description:
+            "It helps me stay fresh, adaptable, and ready to learn or solve difficult problems.",
+        },
+        teamwork: {
+          title: "Teamwork and communication",
+          description:
+            "It reminds me to listen, coordinate with others, and move in sync with the team.",
+        },
+      },
+    },
     timeline: {
       kicker: "Timeline",
       title: "The path that brought me here",
@@ -194,8 +255,45 @@ const en = {
       phone: "Phone",
       facebook: "Facebook",
       github: "GitHub",
-      tiktok: "tiktok",
-      line: "line",
+      tiktok: "TikTok",
+      line: "LINE",
+    },
+    lineQr: {
+      summary: "Scan QR to add me on LINE",
+      title: "Scan QR to add me on LINE",
+      note: "Open the LINE app and scan this QR code to add me as a contact.",
+      aria: "LINE QR Code",
+      close: "Close LINE QR",
+    },
+  },
+  projectsPage: {
+    badge: "PROJECTS",
+    title: "Selected work",
+    titleAccent: "and what I learned",
+    description:
+      "A collection of projects I built and tested in real use, spanning web applications, business systems, and AI. I focus on structure, clarity, and practical product thinking.",
+    stats: {
+      total: {
+        label: "Total",
+        note: "A focused selection that reflects my full-stack development path.",
+      },
+      focus: {
+        label: "Main Focus",
+        title: "Product Thinking",
+        note: "Design the flow, build the feature, and keep the system ready for the next iteration.",
+      },
+    },
+    sections: {
+      featured: {
+        kicker: "FEATURED PROJECT",
+        title: "A project currently being pushed forward",
+        description:
+          "This is the project I use to show product flow, technology choices, and the reasoning behind the overall experience.",
+      },
+      selected: {
+        kicker: "SELECTED WORKS",
+        title: "Other projects worth exploring",
+      },
     },
   },
   projects: {
@@ -315,9 +413,9 @@ const en = {
             desc: "Created a full-stack web app with React on the frontend and FastAPI on the backend.",
           },
           3: {
-          title: "SoftwareEngineering",
-          desc: "ระบบจร้านค้าออนไลน์ วิทยาลัยการคอมพิวเตอร์",
-        },
+            title: "Software Engineering",
+            desc: "An online store system built as a software engineering course project.",
+          },
         },
       },
       history: {

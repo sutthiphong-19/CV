@@ -11,7 +11,6 @@ import PAO1 from "../assets/PAO/002.jpg";
 import img005 from "../assets/005.png";
 import img101 from "../assets/101.jpg";
 import imgB2 from "../assets/01/B2.jpg";
-import imgB1 from "../assets/01/B1.jpg";
 import imgB3 from "../assets/01/B3.jpg";
 import imgBB from "../assets/work.png";
 import imgB4 from "../assets/01/B4-test.jpg";
@@ -26,13 +25,8 @@ import YL8 from "../assets/YL/train_batch0.jpg";
 import YL9 from "../assets/YL/train_batch1.jpg";
 import YL10 from "../assets/YL/train_batch2.jpg";
 import S1 from "../assets/sport/1.jpg";
-import S2 from "../assets/sport/2.jpg";
-import S3 from "../assets/sport/3.jpg";
 import S4 from "../assets/sport/4.jpg";
 import S5 from "../assets/sport/5.jpg";
-import S6 from "../assets/sport/6.jpg";
-import S7 from "../assets/sport/7.jpg";
-import S8 from "../assets/sport/8.jpg";
 import PrestaShop from "../assets/PrestaShop/ps.jpg";
 
 const imageMap = {
@@ -41,6 +35,7 @@ const imageMap = {
   project: { 1: label1, 2: img005, 3: PrestaShop },
   history: { 1: null },
 };
+//ประกาศ projectLinkMap รายการที่ 3 กดลิ้งค์ได้
 const projectLinkMap = {
   project: {
     3: "https://github.com/kunlasatriC/G6_Sec3_SoftwareEngineering",

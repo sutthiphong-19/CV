@@ -1,17 +1,20 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import BackButton from "./components/BackButton";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Projects from "./pages/Projects";
-import Portfolio from "./pages/Portfolio";
-import BackButton from "./components/BackButton";
 import "./App.css";
-import Game from "./pages/Game";
-import SnakeGame from "./pages/games/SnakeGame";
-import QuizGame from "./pages/games/QuizGame";
-import TypingGame from "./pages/games/TypingGame";
+
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Projects = lazy(() => import("./pages/Projects"));
+const Portfolio = lazy(() => import("./pages/Portfolio"));
+const Game = lazy(() => import("./pages/Game"));
+const SnakeGame = lazy(() => import("./pages/games/SnakeGame"));
+const QuizGame = lazy(() => import("./pages/games/QuizGame"));
+const TypingGame = lazy(() => import("./pages/games/TypingGame"));
+
 function App() {
   return (
     <BrowserRouter>
@@ -23,17 +26,19 @@ function App() {
         <div className="main-content" id="content">
           <BackButton />
 
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/portfolio/:section" element={<Portfolio />} />
-            <Route path="/game" element={<Game />} />
-            <Route path="/game/snake" element={<SnakeGame />} />
-            <Route path="/game/quiz" element={<QuizGame />} />
-            <Route path="/game/typing" element={<TypingGame />} />
-          </Routes>
+          <Suspense fallback={<div className="page-loading">Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/portfolio/:section" element={<Portfolio />} />
+              <Route path="/game" element={<Game />} />
+              <Route path="/game/snake" element={<SnakeGame />} />
+              <Route path="/game/quiz" element={<QuizGame />} />
+              <Route path="/game/typing" element={<TypingGame />} />
+            </Routes>
+          </Suspense>
         </div>
       </div>
     </BrowserRouter>

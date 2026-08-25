@@ -1,16 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useTranslation } from "../hooks/useTranslation";
-import profileImg from "../assets/work.png";
+import SkillsSection from "../components/SkillsSection";
 import pyImg from "../assets/PY/111.jpg";
 import paoImg from "../assets/PAO/002.jpg";
 import ylImg from "../assets/YL/101.jpg";
-import SkillsSection from "../components/SkillsSection";
+import profileImg from "../assets/work.png";
+import { useTranslation } from "../hooks/useTranslation";
 
 const highlightItems = [
-  { id: "prayuen", image: pyImg, to: "/portfolio/prayuen"},
-  { id: "khonkaen", image: paoImg, to: "/portfolio/khonkaen"},
-
-  // คลิกการ์ดนี้แล้วไปหน้า 04 AI Project
+  { id: "prayuen", image: pyImg, to: "/portfolio/prayuen" },
+  { id: "khonkaen", image: paoImg, to: "/portfolio/khonkaen" },
   { id: "csProject", image: ylImg, to: "/portfolio/project" },
 ];
 
@@ -112,9 +110,10 @@ function Home() {
                   <Link
                     to={item.to}
                     className="highlight-card-link"
-                    aria-label={`ไปยัง ${t(
-                      `home.highlights.items.${item.id}.title`
-                    )}`}
+                    aria-label={t("common.goTo", {
+                      defaultValue: "ไปยัง {{target}}",
+                      target: t(`home.highlights.items.${item.id}.title`),
+                    })}
                   >
                     {cardContent}
                   </Link>

@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { buildApiUrl } from "../../config/api";
 import "./SnakeGame.css";
-
-const API_URL = import.meta.env.VITE_GAME_API_URL || "http://localhost:8000";
 
 const BOARD_SIZE = 20;
 const SPEED_MS = 120;
@@ -81,25 +80,31 @@ export default function Game() {
 
   const fetchLeaderboard = useCallback(async () => {
     try {
-      const response = await fetch(`${API_URL}/snake/scores`);
+      const response = await fetch(buildApiUrl("/snake/scores"));
       const data = await response.json();
       setLeaderboard(Array.isArray(data) ? data : []);
-    } catch (error) {
+    } catch {
       setLeaderboard([]);
     }
   }, []);
 
   useEffect(() => {
-    fetchLeaderboard();
+    const timer = window.setTimeout(() => {
+      void fetchLeaderboard();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, [fetchLeaderboard]);
 
   const saveScore = useCallback(async () => {
-    if (submittedRef.current) return;
+    if (submittedRef.current) {
+      return;
+    }
 
     submittedRef.current = true;
 
     try {
-      await fetch(`${API_URL}/snake/scores`, {
+      await fetch(buildApiUrl("/snake/scores"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,7 +115,7 @@ export default function Game() {
         }),
       });
 
-      fetchLeaderboard();
+      await fetchLeaderboard();
     } catch (error) {
       console.error("Save score failed", error);
     }
@@ -119,7 +124,7 @@ export default function Game() {
   const finishGame = useCallback(() => {
     statusRef.current = "gameover";
     setStatus("gameover");
-    saveScore();
+    void saveScore();
   }, [saveScore]);
 
   const changeDirection = useCallback((nextDirection) => {
@@ -129,7 +134,9 @@ export default function Game() {
       currentDirection.x + nextDirection.x === 0 &&
       currentDirection.y + nextDirection.y === 0;
 
-    if (isOppositeDirection) return;
+    if (isOppositeDirection) {
+      return;
+    }
 
     nextDirectionRef.current = nextDirection;
   }, []);
@@ -165,7 +172,9 @@ export default function Game() {
   };
 
   const moveSnake = useCallback(() => {
-    if (statusRef.current !== "running") return;
+    if (statusRef.current !== "running") {
+      return;
+    }
 
     const currentSnake = snakeRef.current;
     const currentFood = foodRef.current;
@@ -217,12 +226,14 @@ export default function Game() {
   }, [finishGame]);
 
   useEffect(() => {
-    if (status !== "running") return;
+    if (status !== "running") {
+      return undefined;
+    }
 
-    const timer = setInterval(moveSnake, SPEED_MS);
+    const timer = window.setInterval(moveSnake, SPEED_MS);
 
     return () => {
-      clearInterval(timer);
+      window.clearInterval(timer);
     };
   }, [moveSnake, status]);
 
@@ -358,17 +369,23 @@ export default function Game() {
           </div>
 
           <div className="snake-mobile-controls">
-            <button onClick={() => changeDirection(DIRECTIONS.UP)}>↑</button>
+            <button type="button" onClick={() => changeDirection(DIRECTIONS.UP)}>
+              ^
+            </button>
             <div>
-              <button onClick={() => changeDirection(DIRECTIONS.LEFT)}>←</button>
-              <button onClick={() => changeDirection(DIRECTIONS.DOWN)}>↓</button>
-              <button onClick={() => changeDirection(DIRECTIONS.RIGHT)}>→</button>
+              <button type="button" onClick={() => changeDirection(DIRECTIONS.LEFT)}>
+                {"<"}
+              </button>
+              <button type="button" onClick={() => changeDirection(DIRECTIONS.DOWN)}>
+                v
+              </button>
+              <button type="button" onClick={() => changeDirection(DIRECTIONS.RIGHT)}>
+                {">"}
+              </button>
             </div>
           </div>
 
-          <p className="snake-hint">
-            ใช้ปุ่มลูกศร เพื่อควบคุม และกด Space เพื่อเริ่ม/พักเกม
-          </p>
+          <p className="snake-hint">ใช้ปุ่มลูกศรเพื่อควบคุม และกด Space เพื่อเริ่มหรือพักเกม</p>
         </div>
 
         <aside className="snake-card snake-rank-card">
@@ -387,7 +404,6 @@ export default function Game() {
             ) : (
               <p className="snake-empty">ยังไม่มีคะแนน</p>
             )}
-            
           </div>
         </aside>
       </div>

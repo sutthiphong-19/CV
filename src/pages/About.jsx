@@ -1,8 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import { FiArrowRight, FiCode, FiCompass, FiLayers, FiMail, FiUser } from "react-icons/fi";
-import { useTranslation } from "../hooks/useTranslation";
+import {
+  FiArrowRight,
+  FiCode,
+  FiCompass,
+  FiLayers,
+  FiMail,
+  FiTarget,
+  FiUser,
+  FiZap,
+} from "react-icons/fi";
 import SkillsSection from "../components/SkillsSection";
-
+import sportHero from "../assets/KKC/kks.jpg";
+import sportShotOne from "../assets/KKC/ks.jpg";
+import sportShotTwo from "../assets/KKC/kss.jpg";
+import { useTranslation } from "../hooks/useTranslation";
 
 const timelineIds = ["start", "webapp", "ai"];
 const summaryItems = [
@@ -16,11 +27,63 @@ const portfolioRoutes = [
   { key: "project", icon: FiCode },
   { key: "history", icon: FiMail },
 ];
+const hobbyHighlights = [
+  { key: "discipline", icon: FiTarget },
+  { key: "energy", icon: FiZap },
+  { key: "teamwork", icon: FiUser },
+];
+const sportGallery = [
+  {
+    key: "main",
+    image: sportHero,
+  },
+  {
+    key: "focus",
+    image: sportShotOne,
+  },
+  {
+    key: "moment",
+    image: sportShotTwo,
+  },
+];
+
+const hobbyCopyFallbacks = {
+  title: "Life Outside Code",
+  mainAlt: "Sports activity",
+  badge: "SPORTS HOBBY",
+  headline: "Playing sports helps me build discipline, focus, and consistency.",
+  description:
+    "Outside of work, I enjoy sports because they sharpen quick decisions, teamwork, and self-discipline.",
+  galleryAlt: "Additional sports activity",
+  valuesKicker: "WHAT IT SAYS ABOUT ME",
+  valuesTitle: "How this hobby shapes the way I work",
+  valuesNote:
+    "For me, sports are not just a hobby. They are a place to practice habits and mindset that carry directly into real work.",
+};
+
+const hobbyHighlightFallbacks = {
+  discipline: {
+    title: "Discipline and consistency",
+    description:
+      "It trains me to improve step by step, repeat the fundamentals, and keep my own standards high.",
+  },
+  energy: {
+    title: "Energy and agility",
+    description:
+      "It helps me stay fresh, adaptable, and ready to learn or solve difficult problems.",
+  },
+  teamwork: {
+    title: "Teamwork and communication",
+    description:
+      "It reminds me to listen, coordinate with others, and move in sync with the team.",
+  },
+};
 
 function About() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const focusInterests = t("about.focus.interests", { returnObjects: true });
+  const focusInterestsRaw = t("about.focus.interests", { returnObjects: true });
+  const focusInterests = Array.isArray(focusInterestsRaw) ? focusInterestsRaw : [];
 
   const openLink = () => {
     window.open(
@@ -127,6 +190,99 @@ function About() {
         </article>
       </section>
 
+      <section className="about-section about-hobby-section">
+        <div className="section-header">
+          <p className="section-kicker">{t("about.hobbies.kicker", { defaultValue: "LIFE OUTSIDE CODE" })}</p>
+          <h2>{t("about.hobbies.title", { defaultValue: hobbyCopyFallbacks.title })}</h2>
+        </div>
+
+        <div className="about-hobby-grid">
+          <article className="about-hobby-showcase">
+            <div className="about-hobby-hero">
+              <img
+                src={sportGallery[0].image}
+                alt={t("about.hobbies.gallery.mainAlt", {
+                  defaultValue: hobbyCopyFallbacks.mainAlt,
+                })}
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="about-hobby-overlay">
+                <span className="about-hobby-badge">
+                  {t("about.hobbies.badge", { defaultValue: hobbyCopyFallbacks.badge })}
+                </span>
+                <h3>
+                  {t("about.hobbies.headline", {
+                    defaultValue: hobbyCopyFallbacks.headline,
+                  })}
+                </h3>
+                <p>
+                  {t("about.hobbies.description", {
+                    defaultValue: hobbyCopyFallbacks.description,
+                  })}
+                </p>
+              </div>
+            </div>
+
+            <div className="about-hobby-gallery">
+              {sportGallery.slice(1).map((item) => (
+                <figure key={item.key} className="about-hobby-thumb">
+                  <img
+                    src={item.image}
+                    alt={t(`about.hobbies.gallery.${item.key}Alt`, {
+                      defaultValue: hobbyCopyFallbacks.galleryAlt,
+                    })}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </figure>
+              ))}
+            </div>
+          </article>
+
+          <aside className="about-hobby-copy">
+            <div className="about-panel-heading">
+              <p className="card-kicker">
+                {t("about.hobbies.valuesKicker", { defaultValue: hobbyCopyFallbacks.valuesKicker })}
+              </p>
+              <h2>
+                {t("about.hobbies.valuesTitle", {
+                  defaultValue: hobbyCopyFallbacks.valuesTitle,
+                })}
+              </h2>
+            </div>
+
+            <p className="about-focus-note">
+              {t("about.hobbies.valuesNote", {
+                defaultValue: hobbyCopyFallbacks.valuesNote,
+              })}
+            </p>
+
+            <div className="about-hobby-points">
+              {hobbyHighlights.map(({ key, icon: Icon }) => (
+                <article key={key} className="about-hobby-point">
+                  <div className="about-hobby-point-icon">
+                    <Icon aria-hidden="true" />
+                  </div>
+                  <div>
+                    <strong>
+                      {t(`about.hobbies.highlights.${key}.title`, {
+                        defaultValue: hobbyHighlightFallbacks[key].title,
+                      })}
+                    </strong>
+                    <p>
+                      {t(`about.hobbies.highlights.${key}.description`, {
+                        defaultValue: hobbyHighlightFallbacks[key].description,
+                      })}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </aside>
+        </div>
+      </section>
+
       <section className="about-section">
         <div className="section-header">
           <p className="section-kicker">{t("about.timeline.kicker")}</p>
@@ -144,6 +300,7 @@ function About() {
           ))}
         </div>
       </section>
+
       <SkillsSection />
 
       <section className="about-section">

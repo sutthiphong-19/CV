@@ -110,7 +110,7 @@ function Sidebar() {
 
           <div className="side-menu-copy">
             <p className="side-label">{t("nav.menu")}</p>
-            <strong className="side-heading">{t("common.portfolio")}</strong>
+            <strong className="side-heading">{t("profile.name")}</strong>
             <span className="side-subheading">{t("home.quickFacts.role.value")}</span>
           </div>
         </div>

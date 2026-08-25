@@ -1,37 +1,52 @@
 import { useState } from "react";
-import { useTranslation } from "../hooks/useTranslation";
+import { FiMail, FiPhone } from "react-icons/fi";
+import { FaFacebookF, FaGithub, FaTiktok } from "react-icons/fa";
+import { SiLine } from "react-icons/si";
 import lineQrImage from "../assets/line-qr.jpg";
+import { useTranslation } from "../hooks/useTranslation";
+
+const contactItems = [
+  {
+    key: "email",
+    value: "suttiphong.p@kkumail.com",
+    href: "mailto:suttiphong.p@kkumail.com",
+    icon: FiMail,
+    className: "email",
+  },
+  {
+    key: "phone",
+    value: "096-885-8683",
+    href: "tel:0968858683",
+    icon: FiPhone,
+    className: "phone",
+  },
+  {
+    key: "facebook",
+    value: "suttiphong phongsraphang",
+    href: "https://www.facebook.com/suttipong.pongsapang",
+    icon: FaFacebookF,
+    className: "facebook",
+  },
+  {
+    key: "github",
+    value: "sutthiphong-19",
+    href: "https://github.com/sutthiphong-19",
+    icon: FaGithub,
+    className: "github",
+  },
+  {
+    key: "tiktok",
+    value: "severus_jr",
+    href: "https://www.tiktok.com/@severus_jr",
+    icon: FaTiktok,
+    className: "tiktok",
+    wide: true,
+  },
+];
 
 function Contact() {
   const { t } = useTranslation();
   const [isLineQrOpen, setIsLineQrOpen] = useState(false);
-
-  const openFacebook = () => {
-    window.open(
-      "https://www.facebook.com/Suttiphong%20Phongsraphang","_blank","noopener,noreferrer"
-    );
-  };
-
-  const openGithub = () => {
-    window.open(
-      "https://github.com/sutthiphong-19","_blank","noopener,noreferrer"
-    );
-  };
-
-  const openTiktok = () => {
-    window.open(
-      "https://www.tiktok.com/severus_jr","_blank","noopener,noreferrer"
-    );
-  };
-
-
-  const openLineQr = () => {
-    setIsLineQrOpen(true);
-  };
-
-  const closeLineQr = () => {
-    setIsLineQrOpen(false);
-  };
 
   return (
     <main className="contact-page">
@@ -41,68 +56,35 @@ function Contact() {
         <p className="contact-note">{t("contact.note")}</p>
 
         <div className="contact-grid">
-          <article className="contact-card">
-            <div className="contact-icon email">E</div>
-            <div>
-              <p className="contact-label">{t("contact.items.email")}</p>
-              <p className="contact-value">suttiphong.p@kkumail.com</p>
-            </div>
-          </article>
-
-          <article className="contact-card">
-            <div className="contact-icon phone">P</div>
-            <div>
-              <p className="contact-label">{t("contact.items.phone")}</p>
-              <p className="contact-value">096-885-8683</p>
-            </div>
-          </article>
+          {contactItems.map(({ key, value, href, icon: Icon, className, wide }) => (
+            <a
+              key={key}
+              href={href}
+              target={href.startsWith("http") ? "_blank" : undefined}
+              rel={href.startsWith("http") ? "noreferrer" : undefined}
+              className={`contact-card is-clickable${wide ? " is-wide" : ""}`}
+            >
+              <div className={`contact-icon ${className}`}>
+                <Icon aria-hidden="true" />
+              </div>
+              <div>
+                <p className="contact-label">{t(`contact.items.${key}`)}</p>
+                <p className="contact-value">{value}</p>
+              </div>
+            </a>
+          ))}
 
           <button
             type="button"
-            onClick={openFacebook}
+            onClick={() => setIsLineQrOpen(true)}
             className="contact-card is-clickable"
           >
-            <div className="contact-icon facebook">F</div>
-            <div>
-              <p className="contact-label">{t("contact.items.facebook")}</p>
-              <p className="contact-value">suttiphong phongsraphang</p>
+            <div className="contact-icon line">
+              <SiLine aria-hidden="true" />
             </div>
-          </button>
-
-          <button
-            type="button"
-            onClick={openGithub}
-            className="contact-card is-clickable"
-          >
-            <div className="contact-icon github">G</div>
-            <div>
-              <p className="contact-label">{t("contact.items.github")}</p>
-              <p className="contact-value">sutthiphong-19</p>
-            </div>
-          </button>
-
-          <button
-            type="button"
-            onClick={openTiktok}
-            className="contact-card is-clickable is-wide"
-          >
-            <div className="contact-icon tiktok">T</div>
-            <div>
-              <p className="contact-label">{t("contact.items.tiktok")}</p>
-              <p className="contact-value">severus_jr</p>
-            </div>
-          </button>
-
-          {/* เพิ่ม LINE: กดแล้วเปิด QR */}
-          <button
-            type="button"
-            onClick={openLineQr}
-            className="contact-card is-clickable"
-          >
-            <div className="contact-icon line">L</div>
             <div>
               <p className="contact-label">{t("contact.items.line")}</p>
-              <p className="contact-value">สแกน QR เพื่อเพิ่มเพื่อน</p>
+              <p className="contact-value">{t("contact.lineQr.summary")}</p>
             </div>
           </button>
         </div>
@@ -112,43 +94,43 @@ function Contact() {
         <div
           className="line-qr-backdrop"
           role="presentation"
-          onClick={closeLineQr}
+          onClick={() => setIsLineQrOpen(false)}
         >
           <div
             className="line-qr-modal"
             role="dialog"
             aria-modal="true"
-            aria-label="LINE QR Code"
+            aria-label={t("contact.lineQr.aria")}
             onClick={(event) => event.stopPropagation()}
           >
             <button
               type="button"
               className="line-qr-close"
-              onClick={closeLineQr}
-              aria-label="Close LINE QR"
+              onClick={() => setIsLineQrOpen(false)}
+              aria-label={t("contact.lineQr.close")}
             >
-              ×
+              x
             </button>
 
             <div className="line-qr-header">
-              <div className="contact-icon line">L</div>
+              <div className="contact-icon line">
+                <SiLine aria-hidden="true" />
+              </div>
               <div>
                 <p className="line-qr-kicker">LINE</p>
-                <h2 className="line-qr-title">สแกน QR เพื่อเพิ่มเพื่อน</h2>
+                <h2 className="line-qr-title">{t("contact.lineQr.title")}</h2>
               </div>
             </div>
 
             <div className="line-qr-frame">
               <img
                 src={lineQrImage}
-                alt="LINE QR Code"
+                alt={t("contact.lineQr.aria")}
                 className="line-qr-image"
               />
             </div>
 
-            <p className="line-qr-note">
-              เปิดแอป LINE แล้วสแกน QR Code นี้เพื่อเพิ่มเพื่อนครับ
-            </p>
+            <p className="line-qr-note">{t("contact.lineQr.note")}</p>
           </div>
         </div>
       )}

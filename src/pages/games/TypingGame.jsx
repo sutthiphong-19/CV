@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { buildApiUrl } from "../../config/api";
 import "./MiniGames.css";
-
-const API_URL = import.meta.env.VITE_GAME_API_URL || "http://localhost:8000";
 
 function shuffleWords(words) {
   return [...words].sort(() => Math.random() - 0.5);
@@ -32,13 +31,20 @@ function TypingGame() {
   const totalTyped = typedWords.length;
 
   const accuracy = useMemo(() => {
-    if (!totalTyped) return 100;
+    if (!totalTyped) {
+      return 100;
+    }
+
     return Math.round((correctWords / totalTyped) * 100);
   }, [correctWords, totalTyped]);
 
   const wpm = useMemo(() => {
     const usedSeconds = duration - timeLeft;
-    if (usedSeconds <= 0) return 0;
+
+    if (usedSeconds <= 0) {
+      return 0;
+    }
+
     return Math.round((correctWords / usedSeconds) * 60);
   }, [correctWords, duration, timeLeft]);
 
@@ -46,32 +52,38 @@ function TypingGame() {
     return Math.max(0, wpm * 10 + accuracy);
   }, [accuracy, wpm]);
 
-  const fetchWords = async () => {
-    const response = await fetch(`${API_URL}/typing/words`);
+  const fetchWords = useCallback(async () => {
+    const response = await fetch(buildApiUrl("/typing/words"));
     const data = await response.json();
 
     setWords(shuffleWords(data.words || []));
     setDuration(data.duration || 60);
     setTimeLeft(data.duration || 60);
-  };
-
-  const fetchLeaderboard = async () => {
-    const response = await fetch(`${API_URL}/typing/scores`);
-    const data = await response.json();
-    setLeaderboard(Array.isArray(data) ? data : []);
-  };
-
-  useEffect(() => {
-    fetchWords();
-    fetchLeaderboard();
   }, []);
 
-  const saveScore = async () => {
-    if (submittedRef.current) return;
+  const fetchLeaderboard = useCallback(async () => {
+    const response = await fetch(buildApiUrl("/typing/scores"));
+    const data = await response.json();
+    setLeaderboard(Array.isArray(data) ? data : []);
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      void fetchWords();
+      void fetchLeaderboard();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [fetchLeaderboard, fetchWords]);
+
+  const saveScore = useCallback(async () => {
+    if (submittedRef.current) {
+      return;
+    }
 
     submittedRef.current = true;
 
-    await fetch(`${API_URL}/typing/scores`, {
+    await fetch(buildApiUrl("/typing/scores"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -84,30 +96,27 @@ function TypingGame() {
       }),
     });
 
-    fetchLeaderboard();
-  };
+    await fetchLeaderboard();
+  }, [accuracy, fetchLeaderboard, playerName, score, wpm]);
 
   useEffect(() => {
-    if (status !== "running") return;
-
-    if (timeLeft <= 0) {
-      setStatus("finished");
-      saveScore();
-      return;
+    if (status !== "running") {
+      return undefined;
     }
 
-    const timer = setTimeout(() => {
+    const timer = window.setTimeout(() => {
+      if (timeLeft <= 1) {
+        setTimeLeft(0);
+        setStatus("finished");
+        void saveScore();
+        return;
+      }
+
       setTimeLeft((prev) => prev - 1);
     }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [status, timeLeft]);
-
-  useEffect(() => {
-    if (status === "finished") {
-      saveScore();
-    }
-  }, [status]);
+    return () => window.clearTimeout(timer);
+  }, [saveScore, status, timeLeft]);
 
   const startGame = () => {
     localStorage.setItem("game-player-name", playerName || "Player");
@@ -118,9 +127,14 @@ function TypingGame() {
     setTimeLeft(duration);
     setStatus("running");
 
-    setTimeout(() => {
+    window.setTimeout(() => {
       inputRef.current?.focus();
     }, 50);
+  };
+
+  const finishGame = async () => {
+    setStatus("finished");
+    await saveScore();
   };
 
   const restartGame = async () => {
@@ -131,7 +145,9 @@ function TypingGame() {
   const handleInputChange = (event) => {
     const value = event.target.value;
 
-    if (status !== "running") return;
+    if (status !== "running") {
+      return;
+    }
 
     if (value.endsWith(" ")) {
       const typed = value.trim();
@@ -227,10 +243,7 @@ function TypingGame() {
             <>
               <div className="typing-word-box">
                 {words.slice(currentIndex, currentIndex + 24).map((word, index) => (
-                  <span
-                    key={`${word}-${index}`}
-                    className={index === 0 ? "current" : ""}
-                  >
+                  <span key={`${word}-${index}`} className={index === 0 ? "current" : ""}>
                     {word}
                   </span>
                 ))}
@@ -251,7 +264,7 @@ function TypingGame() {
                     เริ่มเกม
                   </button>
                 ) : (
-                  <button className="mini-secondary-btn" onClick={() => setStatus("finished")}>
+                  <button className="mini-secondary-btn" onClick={() => void finishGame()}>
                     จบเกม
                   </button>
                 )}

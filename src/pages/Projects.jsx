@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "../hooks/useTranslation";
 import imgBB from "../assets/work.png";
 import YL8 from "../assets/YL/train_batch0.jpg";
 import Logo from "../assets/sport/Logo.png";
@@ -10,7 +11,7 @@ const projects = [
     title: "Portfolio Website",
     type: "Personal Website",
     description:
-      "เว็บไซต์พอร์ตโฟลิโอส่วนตัวสำหรับแนะนำตัว แสดงผลงาน และเปิดช่องทางติดต่อ โดยออกแบบให้ใช้งานง่ายทั้งบนมือถือและเดสก์ท็อป",
+      "เว็บไซต์พอร์ตโฟลิโอส่วนตัวสำหรับแนะนำตัว แสดงผลงาน และเปิดช่องทางการติดต่อ โดยออกแบบให้ใช้งานง่ายทั้งบนมือถือและเดสก์ท็อป",
     stack: ["React", "Vite", "CSS", "Responsive"],
     status: "พร้อมใช้งาน",
     link: "/portfolio/portfolio",
@@ -22,7 +23,7 @@ const projects = [
     title: "Sport Booking Platform",
     type: "Web Application",
     description:
-      "ระบบจองสนามกีฬาแบบออนไลน์ มีขั้นตอนเลือกสนาม เลือกเวลา สรุปรายการจอง อัปโหลดสลิป และรอการอนุมัติจากผู้ดูแลระบบ",
+      "ระบบจองสนามกีฬาออนไลน์ มีขั้นตอนเลือกสนาม เลือกเวลา สรุปรายการจอง อัปโหลดสลิป และรอการอนุมัติจากผู้ดูแลระบบ",
     stack: ["Vue 3", "Pinia", "PrimeVue", "Node.js"],
     status: "กำลังพัฒนา",
     link: "/portfolio/sport-booking",
@@ -30,7 +31,7 @@ const projects = [
     featured: true,
     demoUrl: "https://sport-booking-x2r6.onrender.com/",
     summary: [
-      "รองรับฟลูว์ตั้งแต่เลือกสนามจนยืนยันการชำระเงิน",
+      "รองรับ flow ตั้งแต่เลือกสนามจนยืนยันการชำระเงิน",
       "โฟกัส UI ที่อ่านง่ายและใช้งานจริงบนมือถือ",
       "ออกแบบให้ต่อยอดฝั่งแอดมินและจัดการสถานะการจองได้",
     ],
@@ -65,10 +66,7 @@ const otherProjects = projects.filter((project) => !project.featured);
 
 function ProjectCard({ project, featured = false }) {
   return (
-    <article
-      className={`project-clean-card ${featured ? "project-clean-card-featured" : ""}`}
-      key={project.number}
-    >
+    <article className={`project-clean-card ${featured ? "project-clean-card-featured" : ""}`}>
       <div className={`project-clean-cover ${project.image ? "has-image" : ""}`}>
         {project.image && (
           <img
@@ -92,9 +90,7 @@ function ProjectCard({ project, featured = false }) {
 
       <div className="project-clean-body">
         <p className="project-clean-type">{project.type}</p>
-
         <h3>{project.title}</h3>
-
         <p>{project.description}</p>
 
         <div className="project-clean-stack">
@@ -117,7 +113,7 @@ function ProjectCard({ project, featured = false }) {
         <div className="project-clean-actions">
           <Link to={project.link} className="project-clean-link">
             <span>ดูรายละเอียด</span>
-            <strong>→</strong>
+            <strong>{">"}</strong>
           </Link>
 
           {featured && project.demoUrl && (
@@ -128,7 +124,7 @@ function ProjectCard({ project, featured = false }) {
               rel="noreferrer"
             >
               <span>เปิดเดโม</span>
-              <strong>↗</strong>
+              <strong>{">"}</strong>
             </a>
           )}
         </div>
@@ -138,35 +134,51 @@ function ProjectCard({ project, featured = false }) {
 }
 
 function Projects() {
+  const { t } = useTranslation();
+
   return (
     <main className="projects-page">
       <section className="projects-intro-card">
         <div className="projects-intro-copy">
-          <p className="about-badge">PROJECTS</p>
+          <p className="about-badge">{t("projectsPage.badge", { defaultValue: "PROJECTS" })}</p>
 
           <h1>
-            ผลงานที่เลือกมาเล่า
-            <span> และสิ่งที่ได้เรียนรู้</span>
+            {t("projectsPage.title", { defaultValue: "ผลงานที่เลือกมาเล่า" })}
+            <span>
+              {" "}
+              {t("projectsPage.titleAccent", {
+                defaultValue: "และสิ่งที่ได้เรียนรู้",
+              })}
+            </span>
           </h1>
 
           <p>
-            รวมโปรเจกต์ที่ผมพัฒนาและทดลองใช้งานจริง ทั้งงานเว็บแอป งานระบบธุรกิจ
-            และงาน AI โดยให้ความสำคัญกับโครงสร้างที่ชัดเจน ประสบการณ์ใช้งานที่ดี
-            และการต่อยอดได้ในโปรเจกต์จริง
+            {t("projectsPage.description", {
+              defaultValue:
+                "รวมโปรเจกต์ที่ผมพัฒนาและทดลองใช้งานจริง ทั้งงานเว็บแอป งานระบบธุรกิจ และงาน AI โดยให้ความสำคัญกับโครงสร้างที่ชัดเจนและแนวคิดแบบ product",
+            })}
           </p>
         </div>
 
         <div className="projects-intro-stats">
           <div>
-            <span>ทั้งหมด</span>
+            <span>{t("projectsPage.stats.total.label", { defaultValue: "ทั้งหมด" })}</span>
             <strong>{projects.length} Projects</strong>
-            <p>คัดเฉพาะงานที่สะท้อนแนวทางการพัฒนาแบบ Full Stack</p>
+            <p>
+              {t("projectsPage.stats.total.note", {
+                defaultValue: "คัดเฉพาะงานที่สะท้อนแนวทางการพัฒนาแบบ Full Stack",
+              })}
+            </p>
           </div>
 
           <div>
-            <span>โฟกัสหลัก</span>
-            <strong>Product Thinking</strong>
-            <p>ออกแบบ flow, ลงมือพัฒนา, และเตรียมระบบให้พร้อมต่อยอด</p>
+            <span>{t("projectsPage.stats.focus.label", { defaultValue: "โฟกัสหลัก" })}</span>
+            <strong>{t("projectsPage.stats.focus.title", { defaultValue: "Product Thinking" })}</strong>
+            <p>
+              {t("projectsPage.stats.focus.note", {
+                defaultValue: "ออกแบบ flow ลงมือพัฒนา และเตรียมระบบให้พร้อมต่อยอด",
+              })}
+            </p>
           </div>
         </div>
       </section>
@@ -174,13 +186,23 @@ function Projects() {
       <section className="projects-work-section">
         <div className="projects-work-head">
           <div>
-            <p className="section-kicker">FEATURED PROJECT</p>
-            <h2>โปรเจกต์เด่นที่กำลังพัฒนา</h2>
+            <p className="section-kicker">
+              {t("projectsPage.sections.featured.kicker", {
+                defaultValue: "FEATURED PROJECT",
+              })}
+            </p>
+            <h2>
+              {t("projectsPage.sections.featured.title", {
+                defaultValue: "โปรเจกต์เด่นที่กำลังพัฒนา",
+              })}
+            </h2>
           </div>
 
           <p>
-            งานที่เลือกมาเน้นการเล่า flow การใช้งานจริง เทคโนโลยีที่ใช้ และแนวคิดในการออกแบบระบบ
-            ให้ดูได้ทั้งภาพรวมและรายละเอียด
+            {t("projectsPage.sections.featured.description", {
+              defaultValue:
+                "งานที่เลือกมาเน้นการเล่า flow การใช้งานจริง เทคโนโลยีที่ใช้ และแนวคิดในการออกแบบระบบให้เห็นทั้งภาพรวมและรายละเอียด",
+            })}
           </p>
         </div>
 
@@ -188,8 +210,16 @@ function Projects() {
 
         <div className="projects-work-head projects-work-head-secondary">
           <div>
-            <p className="section-kicker">SELECTED WORKS</p>
-            <h2>โปรเจกต์อื่นที่น่าสนใจ</h2>
+            <p className="section-kicker">
+              {t("projectsPage.sections.selected.kicker", {
+                defaultValue: "SELECTED WORKS",
+              })}
+            </p>
+            <h2>
+              {t("projectsPage.sections.selected.title", {
+                defaultValue: "โปรเจกต์อื่นที่น่าสนใจ",
+              })}
+            </h2>
           </div>
         </div>
 

@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { buildApiUrl } from "../../config/api";
 import "./MiniGames.css";
-
-const API_URL = import.meta.env.VITE_GAME_API_URL || "http://localhost:8000";
 
 function QuizGame() {
   const [questions, setQuestions] = useState([]);
@@ -15,6 +14,7 @@ function QuizGame() {
   const [status, setStatus] = useState("playing");
   const [message, setMessage] = useState("");
   const [isChecking, setIsChecking] = useState(false);
+  const answerTimerRef = useRef(null);
 
   const currentQuestion = useMemo(() => {
     return questions[currentIndex] || null;
@@ -24,45 +24,62 @@ function QuizGame() {
     ? Math.round(((currentIndex + 1) / questions.length) * 100)
     : 0;
 
-  const fetchQuestions = async () => {
-    const response = await fetch(`${API_URL}/quiz/questions`);
+  const fetchQuestions = useCallback(async () => {
+    const response = await fetch(buildApiUrl("/quiz/questions"));
     const data = await response.json();
-    setQuestions(data);
-  };
-
-  const fetchLeaderboard = async () => {
-    const response = await fetch(`${API_URL}/quiz/scores`);
-    const data = await response.json();
-    setLeaderboard(Array.isArray(data) ? data : []);
-  };
-
-  useEffect(() => {
-    fetchQuestions();
-    fetchLeaderboard();
+    setQuestions(Array.isArray(data) ? data : []);
   }, []);
 
-  const saveScore = async (finalScore) => {
-    await fetch(`${API_URL}/quiz/scores`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: playerName || "Player",
-        score: finalScore,
-      }),
-    });
+  const fetchLeaderboard = useCallback(async () => {
+    const response = await fetch(buildApiUrl("/quiz/scores"));
+    const data = await response.json();
+    setLeaderboard(Array.isArray(data) ? data : []);
+  }, []);
 
-    fetchLeaderboard();
-  };
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      void fetchQuestions();
+      void fetchLeaderboard();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [fetchLeaderboard, fetchQuestions]);
+
+  useEffect(() => {
+    return () => {
+      if (answerTimerRef.current) {
+        window.clearTimeout(answerTimerRef.current);
+      }
+    };
+  }, []);
+
+  const saveScore = useCallback(
+    async (finalScore) => {
+      await fetch(buildApiUrl("/quiz/scores"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: playerName || "Player",
+          score: finalScore,
+        }),
+      });
+
+      await fetchLeaderboard();
+    },
+    [fetchLeaderboard, playerName]
+  );
 
   const handleAnswer = async () => {
-    if (!selectedAnswer || !currentQuestion || isChecking) return;
+    if (!selectedAnswer || !currentQuestion || isChecking) {
+      return;
+    }
 
     setIsChecking(true);
 
     try {
-      const response = await fetch(`${API_URL}/quiz/check-answer`, {
+      const response = await fetch(buildApiUrl("/quiz/check-answer"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,12 +99,12 @@ function QuizGame() {
         setScore(nextScore);
       }
 
-      setTimeout(() => {
+      answerTimerRef.current = window.setTimeout(() => {
         const isLast = currentIndex >= questions.length - 1;
 
         if (isLast) {
           setStatus("finished");
-          saveScore(nextScore);
+          void saveScore(nextScore);
         } else {
           setCurrentIndex((prev) => prev + 1);
           setSelectedAnswer("");
@@ -96,7 +113,7 @@ function QuizGame() {
 
         setIsChecking(false);
       }, 800);
-    } catch (error) {
+    } catch {
       setMessage("เชื่อมต่อ Backend ไม่สำเร็จ");
       setIsChecking(false);
     }
@@ -168,11 +185,7 @@ function QuizGame() {
                       <button
                         key={choice}
                         type="button"
-                        className={
-                          selectedAnswer === choice
-                            ? "mini-choice active"
-                            : "mini-choice"
-                        }
+                        className={selectedAnswer === choice ? "mini-choice active" : "mini-choice"}
                         onClick={() => setSelectedAnswer(choice)}
                         disabled={isChecking}
                       >
