@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useTranslation } from "../hooks/useTranslation";
 import imgBB from "../assets/work.png";
 import YL8 from "../assets/YL/train_batch0.jpg";
@@ -13,6 +13,7 @@ const projects = [
     description:
       "เว็บไซต์พอร์ตโฟลิโอส่วนตัวสำหรับแนะนำตัว แสดงผลงาน และเปิดช่องทางการติดต่อ โดยออกแบบให้ใช้งานง่ายทั้งบนมือถือและเดสก์ท็อป",
     stack: ["React", "Vite", "CSS", "Responsive"],
+    relatedTech: ["React", "Vite", "CSS", "JavaScript", "HTML"],
     status: "พร้อมใช้งาน",
     link: "/portfolio/portfolio",
     image: imgBB,
@@ -25,6 +26,7 @@ const projects = [
     description:
       "ระบบจองสนามกีฬาออนไลน์ มีขั้นตอนเลือกสนาม เลือกเวลา สรุปรายการจอง อัปโหลดสลิป และรอการอนุมัติจากผู้ดูแลระบบ",
     stack: ["Vue 3", "Pinia", "PrimeVue", "Node.js"],
+    relatedTech: ["Vue.js", "Vue 3", "Pinia", "PrimeVue", "Node.js"],
     status: "กำลังพัฒนา",
     link: "/portfolio/sport-booking",
     image: Logo,
@@ -44,6 +46,7 @@ const projects = [
     description:
       "ระบบจัดการสินค้า พนักงาน ลูกค้า การรับเข้า การเบิกออก และสรุปข้อมูลสำหรับใช้งานในธุรกิจ",
     stack: ["Node.js", "Prisma", "PostgreSQL", "MongoDB"],
+    relatedTech: ["Node.js", "Prisma", "PostgreSQL", "MongoDB"],
     status: "Backend พร้อมต่อยอด",
     link: "/portfolio/erp",
   },
@@ -55,9 +58,22 @@ const projects = [
     description:
       "โปรเจกต์ตรวจจับวัตถุจากรูปภาพด้วย AI แสดงผลก่อนและหลังประมวลผล เหมาะสำหรับต่อยอดงานสาย Computer Vision",
     stack: ["Python", "YOLO", "AI", "Object Detection"],
+    relatedTech: ["Python", "YOLO", "AI", "Object Detection"],
     status: "Prototype",
     link: "/portfolio/ai",
     image: YL8,
+  },
+  {
+    number: "05",
+    badge: "GAME",
+    title: "Mini Games Playground",
+    type: "Interactive Web App",
+    description:
+      "รวมมินิเกมสำหรับทดลอง React logic การเชื่อมต่อ REST API และการบันทึกคะแนนด้วย Python FastAPI",
+    stack: ["React", "JavaScript", "Python", "FastAPI"],
+    relatedTech: ["React", "JavaScript", "Python", "FastAPI"],
+    status: "พร้อมทดลองเล่น",
+    link: "/game",
   },
 ];
 
@@ -134,7 +150,18 @@ function ProjectCard({ project, featured = false }) {
 }
 
 function Projects() {
-  const { t } = useTranslation();
+  const { i18n, t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const activeTech = searchParams.get("tech")?.trim() || "";
+  const normalizedTech = activeTech.toLocaleLowerCase();
+  const isThai = i18n.language?.startsWith("th");
+  const filteredProjects = activeTech
+    ? projects.filter((project) =>
+        (project.relatedTech || project.stack).some(
+          (item) => item.toLocaleLowerCase() === normalizedTech,
+        ),
+      )
+    : projects;
 
   return (
     <main className="projects-page">
@@ -183,8 +210,76 @@ function Projects() {
         </div>
       </section>
 
+      {activeTech && (
+        <section className="projects-filter-bar" aria-live="polite">
+          <div className="projects-filter-copy">
+            <p>{isThai ? "กำลังแสดงผลงานตามทักษะ" : "FILTERED BY TECHNOLOGY"}</p>
+            <div>
+              <span className="projects-filter-tag">{activeTech}</span>
+              <strong>
+                {isThai
+                  ? `พบ ${filteredProjects.length} ผลงานที่เกี่ยวข้อง`
+                  : `${filteredProjects.length} related project${filteredProjects.length === 1 ? "" : "s"}`}
+              </strong>
+            </div>
+          </div>
+
+          <Link to="/projects" className="projects-filter-clear">
+            {isThai ? "ดูผลงานทั้งหมด" : "View all projects"}
+            <span aria-hidden="true">×</span>
+          </Link>
+        </section>
+      )}
+
       <section className="projects-work-section">
-        <div className="projects-work-head">
+        {activeTech ? (
+          <>
+            <div className="projects-work-head projects-filter-heading">
+              <div>
+                <p className="section-kicker">TECHNOLOGY PROJECTS</p>
+                <h2>
+                  {isThai ? "ผลงานที่ใช้ " : "Projects using "}
+                  <span>{activeTech}</span>
+                </h2>
+              </div>
+              <p>
+                {isThai
+                  ? "เลือกดูรายละเอียดของแต่ละโปรเจกต์เพื่ออ่านแนวคิด เทคโนโลยี และขั้นตอนการพัฒนา"
+                  : "Open a project to explore its concept, technology, and development process."}
+              </p>
+            </div>
+
+            {filteredProjects.length > 0 ? (
+              <div className="projects-grid-clean projects-filter-grid">
+                {filteredProjects.map((project) => (
+                  <ProjectCard project={project} key={project.number} />
+                ))}
+              </div>
+            ) : (
+              <div className="projects-empty-state">
+                <span aria-hidden="true">{`{ }`}</span>
+                <div>
+                  <h3>
+                    {isThai
+                      ? `ยังไม่มีผลงาน ${activeTech} ที่เผยแพร่`
+                      : `No published ${activeTech} project yet`}
+                  </h3>
+                  <p>
+                    {isThai
+                      ? "ทักษะนี้อยู่ระหว่างนำไปพัฒนาโปรเจกต์ใหม่ ลองเลือกดูผลงานทั้งหมดก่อนได้ครับ"
+                      : "A project using this skill is in progress. You can browse all published work for now."}
+                  </p>
+                </div>
+                <Link to="/projects" className="project-clean-link">
+                  <span>{isThai ? "ดูผลงานทั้งหมด" : "View all projects"}</span>
+                  <strong>{">"}</strong>
+                </Link>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="projects-work-head">
           <div>
             <p className="section-kicker">
               {t("projectsPage.sections.featured.kicker", {
@@ -228,6 +323,8 @@ function Projects() {
             <ProjectCard project={project} key={project.number} />
           ))}
         </div>
+          </>
+        )}
       </section>
     </main>
   );

@@ -45,7 +45,7 @@ const routeMeta = {
   },
 };
 
-function Header() {
+function Header({ isMenuOpen, onMenuToggle }) {
   const { t, i18n } = useTranslation();
   const { isDark, toggleTheme } = useTheme();
   const location = useLocation();
@@ -136,6 +136,21 @@ function Header() {
         </div>
 
         <div className="site-header-actions">
+          <button
+            type="button"
+            className={`header-menu-button${isMenuOpen ? " is-open" : ""}`}
+            onClick={onMenuToggle}
+            aria-label={t("nav.menu")}
+            aria-expanded={isMenuOpen}
+            aria-controls="sidebar-navigation-panel"
+          >
+            <span className="header-menu-icon" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
+
           <button
             type="button"
             className={`theme-toggle${isDark ? " is-dark" : ""}`}

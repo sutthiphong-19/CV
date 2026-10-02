@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import {
   FiArrowRight,
@@ -69,9 +69,8 @@ const gameLinks = [
 
 const quickMetaKeys = ["role", "interests"];
 
-function Sidebar() {
+function Sidebar({ isMenuOpen, onMenuClose }) {
   const { t } = useTranslation();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const sidebarRef = useRef(null);
 
   useEffect(() => {
@@ -79,15 +78,17 @@ function Sidebar() {
       return undefined;
     }
 
+    document.body.classList.add("navigation-open");
+
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
-        setIsMenuOpen(false);
+        onMenuClose();
       }
     };
 
     const handlePointerDown = (event) => {
       if (!sidebarRef.current?.contains(event.target)) {
-        setIsMenuOpen(false);
+        onMenuClose();
       }
     };
 
@@ -96,11 +97,12 @@ function Sidebar() {
     document.addEventListener("touchstart", handlePointerDown);
 
     return () => {
+      document.body.classList.remove("navigation-open");
       window.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("mousedown", handlePointerDown);
       document.removeEventListener("touchstart", handlePointerDown);
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, onMenuClose]);
 
   return (
     <aside className={`sidebar${isMenuOpen ? " is-open" : ""}`} ref={sidebarRef}>
@@ -111,27 +113,28 @@ function Sidebar() {
           <div className="side-menu-copy">
             <p className="side-label">{t("nav.menu")}</p>
             <strong className="side-heading">{t("profile.name")}</strong>
+            <strong className="side-mobile-heading">{t("nav.menu")}</strong>
             <span className="side-subheading">{t("home.quickFacts.role.value")}</span>
           </div>
         </div>
 
-        <button
-          type="button"
-          className={`side-more-button ${isMenuOpen ? "is-open" : ""}`}
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-          aria-label={t("nav.menu")}
-          aria-expanded={isMenuOpen}
-          aria-controls="sidebar-navigation"
-        >
-          <span className="side-more-button-icon" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </span>
-        </button>
       </div>
 
-      <div className="sidebar-shell" role="dialog" aria-modal={isMenuOpen ? "true" : undefined}>
+      {isMenuOpen && (
+        <button
+          type="button"
+          className="sidebar-backdrop"
+          onClick={onMenuClose}
+          aria-label="Close navigation"
+        />
+      )}
+
+      <div
+        id="sidebar-navigation-panel"
+        className="sidebar-shell"
+        role={isMenuOpen ? "dialog" : undefined}
+        aria-modal={isMenuOpen ? "true" : undefined}
+      >
         <section className="side-panel side-overview-panel">
           <div className="side-overview-head">
             <div className="side-overview-badge">SP</div>
@@ -162,7 +165,7 @@ function Sidebar() {
                 key={key}
                 to={to}
                 end={end}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={onMenuClose}
                 className={({ isActive }) => `side-link${isActive ? " active" : ""}`}
               >
                 <span className="side-link-accent">{accent}</span>
@@ -193,7 +196,7 @@ function Sidebar() {
               <NavLink
                 key={to}
                 to={to}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={onMenuClose}
                 className={({ isActive }) => `side-shortcut-card${isActive ? " active" : ""}`}
               >
                 <span className="side-shortcut-icon" aria-hidden="true">
@@ -216,7 +219,7 @@ function Sidebar() {
               <NavLink
                 key={to}
                 to={to}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={onMenuClose}
                 className={({ isActive }) => `side-shortcut-card${isActive ? " active" : ""}`}
               >
                 <span className="side-shortcut-icon" aria-hidden="true">
@@ -232,7 +235,7 @@ function Sidebar() {
           <p className="side-panel-kicker">{t("contact.badge")}</p>
           <strong>{t("contact.title")}</strong>
 
-          <NavLink to="/contact" className="side-cta-link" onClick={() => setIsMenuOpen(false)}>
+          <NavLink to="/contact" className="side-cta-link" onClick={onMenuClose}>
             <span>{t("nav.contact")}</span>
             <FiArrowRight aria-hidden="true" />
           </NavLink>

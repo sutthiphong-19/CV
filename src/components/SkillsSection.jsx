@@ -1,4 +1,5 @@
 import { FaCss3Alt } from "react-icons/fa";
+import { FiArrowUpRight } from "react-icons/fi";
 import {
   SiDocker,
   SiFastapi,
@@ -12,6 +13,7 @@ import {
   SiVite,
   SiVuedotjs,
 } from "react-icons/si";
+import { Link } from "react-router-dom";
 import { useTranslation } from "../hooks/useTranslation";
 
 const skillGroups = [
@@ -67,14 +69,20 @@ function SkillsSection() {
                 const Icon = skill.icon;
 
                 return (
-                  <span key={skill.name} className="about-tech-pill">
+                  <Link
+                    key={skill.name}
+                    className="about-tech-pill"
+                    to={`/projects?tech=${encodeURIComponent(skill.name)}`}
+                    aria-label={`ดูผลงานที่ใช้ ${skill.name}`}
+                  >
                     <Icon
                       className="about-tech-icon"
                       style={{ color: skill.color }}
                       aria-hidden="true"
                     />
                     <span>{skill.name}</span>
-                  </span>
+                    <FiArrowUpRight className="about-tech-link-icon" aria-hidden="true" />
+                  </Link>
                 );
               })}
             </div>

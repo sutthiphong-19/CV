@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import SkillsSection from "../components/SkillsSection";
+import WorldClock from "../components/WorldClock";
 import pyImg from "../assets/PY/111.jpg";
 import paoImg from "../assets/PAO/002.jpg";
 import ylImg from "../assets/YL/101.jpg";
@@ -43,6 +44,8 @@ function Home() {
               {t("home.ctas.contact")}
             </button>
           </div>
+
+          <WorldClock />
         </div>
 
         <aside className="hero-visual flex flex-column align-items-center">
