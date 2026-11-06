@@ -1,6 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import BackButton from "./components/BackButton";
+import CyberBackground from "./components/CyberBackground";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import "./App.css";
@@ -38,6 +39,7 @@ function App() {
   return (
     <BrowserRouter>
       <RouteScrollManager />
+      <CyberBackground />
       <a className="skip-link" href="#content">
         ข้ามไปยังเนื้อหา / Skip to content
       </a>

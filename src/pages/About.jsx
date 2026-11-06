@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import {
+  FiAward,
   FiArrowRight,
+  FiBook,
+  FiBookOpen,
+  FiCalendar,
   FiCode,
-  FiCompass,
   FiLayers,
   FiMail,
   FiTarget,
@@ -13,14 +16,10 @@ import SkillsSection from "../components/SkillsSection";
 import sportHero from "../assets/KKC/kks.jpg";
 import sportShotOne from "../assets/KKC/ks.jpg";
 import sportShotTwo from "../assets/KKC/kss.jpg";
+import educationImage from "../assets/101.jpg";
 import { useTranslation } from "../hooks/useTranslation";
 
 const timelineIds = ["start", "webapp", "ai"];
-const summaryItems = [
-  { key: "focus", icon: FiCode },
-  { key: "style", icon: FiLayers },
-  { key: "goal", icon: FiCompass },
-];
 const portfolioRoutes = [
   { key: "prayuen", icon: FiUser },
   { key: "khonkaen", icon: FiLayers },
@@ -31,6 +30,13 @@ const hobbyHighlights = [
   { key: "discipline", icon: FiTarget },
   { key: "energy", icon: FiZap },
   { key: "teamwork", icon: FiUser },
+];
+const educationHighlights = [
+  { key: "degree", icon: FiAward },
+  { key: "upperSecondary", icon: FiBookOpen },
+  { key: "lowerSecondary", icon: FiBook },
+  { key: "period", icon: FiCalendar },
+  { key: "learning", icon: FiBookOpen },
 ];
 const sportGallery = [
   {
@@ -82,112 +88,55 @@ const hobbyHighlightFallbacks = {
 function About() {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const focusInterestsRaw = t("about.focus.interests", { returnObjects: true });
-  const focusInterests = Array.isArray(focusInterestsRaw) ? focusInterestsRaw : [];
-
-  const openLink = () => {
-    window.open(
-      "https://th.trip.com/moments/detail/nong-ruea-1448671-14928121/",
-      "_blank",
-      "noopener,noreferrer"
-    );
-  };
 
   return (
     <main className="about-page">
-      <section className="about-hero">
-        <div className="about-hero-grid">
-          <div className="about-hero-copy">
-            <div className="about-badge">{t("about.badge")}</div>
-            <h1>{t("about.heroTitle")}</h1>
-            <p className="about-intro">{t("about.intro1")}</p>
-            <p className="about-intro">{t("about.intro2")}</p>
+      <section className="about-section about-hobby-section about-education-section">
+        <div className="section-header">
+          <p className="section-kicker">{t("about.education.kicker")}</p>
+          <h2>{t("about.education.title")}</h2>
+        </div>
 
-            <div className="about-summary-strip">
-              {summaryItems.map(({ key, icon: Icon }) => (
-                <article key={key} className="about-summary-item">
-                  <div className="about-summary-icon">
+        <div className="about-hobby-grid">
+          <article className="about-hobby-showcase">
+            <div className="about-hobby-hero about-education-hero">
+              <img
+                src={educationImage}
+                alt={t("about.education.imageAlt")}
+                loading="eager"
+                decoding="async"
+              />
+              <div className="about-hobby-overlay">
+                <span className="about-hobby-badge">{t("about.education.badge")}</span>
+                <h3>{t("about.education.headline")}</h3>
+                <p>{t("about.education.description")}</p>
+              </div>
+            </div>
+          </article>
+
+          <aside className="about-hobby-copy">
+            <div className="about-panel-heading">
+              <p className="card-kicker">{t("about.education.detailsKicker")}</p>
+              <h2>{t("about.education.detailsTitle")}</h2>
+            </div>
+
+            <p className="about-focus-note">{t("about.education.note")}</p>
+
+            <div className="about-hobby-points">
+              {educationHighlights.map(({ key, icon: Icon }) => (
+                <article key={key} className="about-hobby-point">
+                  <div className="about-hobby-point-icon">
                     <Icon aria-hidden="true" />
                   </div>
                   <div>
-                    <span>{t(`about.stats.${key}.label`)}</span>
-                    <strong>{t(`about.stats.${key}.title`)}</strong>
+                    <strong>{t(`about.education.highlights.${key}.title`)}</strong>
+                    <p>{t(`about.education.highlights.${key}.description`)}</p>
                   </div>
-                </article>
-              ))}
-            </div>
-
-            <div className="about-actions">
-              <button type="button" onClick={openLink} className="primary">
-                {t("about.actions.more")}
-              </button>
-              <button type="button" onClick={() => navigate("/contact")} className="secondary">
-                {t("about.actions.contact")}
-              </button>
-            </div>
-          </div>
-
-          <aside className="about-hero-panel">
-            <div className="about-panel-heading">
-              <p className="card-kicker">{t("about.focus.kicker")}</p>
-              <h2>{t("about.focus.title")}</h2>
-            </div>
-
-            <div className="interest-list">
-              {focusInterests.map((item) => (
-                <span key={item} className="interest-pill">
-                  {item}
-                </span>
-              ))}
-            </div>
-
-            <div className="about-stats">
-              {summaryItems.map(({ key }) => (
-                <article key={key} className="about-stat">
-                  <span>{t(`about.stats.${key}.label`)}</span>
-                  <strong>{t(`about.stats.${key}.title`)}</strong>
-                  <p>{t(`about.stats.${key}.description`)}</p>
                 </article>
               ))}
             </div>
           </aside>
         </div>
-      </section>
-
-      <section className="about-grid">
-        <article className="about-card about-story">
-          <p className="card-kicker">{t("about.story.kicker")}</p>
-          <h2>{t("about.story.title")}</h2>
-          <p>{t("about.story.paragraph1")}</p>
-          <p>{t("about.story.paragraph2")}</p>
-
-          <div className="about-story-points">
-            {summaryItems.map(({ key, icon: Icon }) => (
-              <article key={key} className="story-point">
-                <div className="story-point-icon">
-                  <Icon aria-hidden="true" />
-                </div>
-                <div>
-                  <strong>{t(`about.stats.${key}.title`)}</strong>
-                  <p>{t(`about.stats.${key}.description`)}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </article>
-
-        <article className="about-card about-focus">
-          <p className="card-kicker">{t("about.focus.kicker")}</p>
-          <h2>{t("about.focus.title")}</h2>
-          <p className="about-focus-note">{t("about.intro2")}</p>
-          <div className="interest-list">
-            {focusInterests.map((item) => (
-              <span key={item} className="interest-pill">
-                {item}
-              </span>
-            ))}
-          </div>
-        </article>
       </section>
 
       <section className="about-section about-hobby-section">

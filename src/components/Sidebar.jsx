@@ -72,6 +72,7 @@ const quickMetaKeys = ["role", "interests"];
 function Sidebar({ isMenuOpen, onMenuClose }) {
   const { t } = useTranslation();
   const sidebarRef = useRef(null);
+  const panelRef = useRef(null);
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -79,6 +80,10 @@ function Sidebar({ isMenuOpen, onMenuClose }) {
     }
 
     document.body.classList.add("navigation-open");
+
+    if (panelRef.current) {
+      panelRef.current.scrollTop = 0;
+    }
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
@@ -132,6 +137,7 @@ function Sidebar({ isMenuOpen, onMenuClose }) {
       <div
         id="sidebar-navigation-panel"
         className="sidebar-shell"
+        ref={panelRef}
         role={isMenuOpen ? "dialog" : undefined}
         aria-modal={isMenuOpen ? "true" : undefined}
       >

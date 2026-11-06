@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useTranslation } from "../hooks/useTranslation";
 import imgBB from "../assets/work.png";
@@ -77,8 +78,142 @@ const projects = [
   },
 ];
 
-const featuredProject = projects.find((project) => project.featured);
-const otherProjects = projects.filter((project) => !project.featured);
+const showcaseProjects = projects.filter((project) => project.number !== "01");
+
+function ProjectRack() {
+  const trackRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const selectProject = (index) => {
+    const track = trackRef.current;
+    const slide = track?.children[index];
+
+    if (!track || !slide) return;
+
+    setActiveIndex(index);
+    slide.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "start",
+    });
+  };
+
+  const updateActiveProject = () => {
+    const track = trackRef.current;
+    if (!track?.clientWidth) return;
+
+    const nextIndex = Math.round(track.scrollLeft / track.clientWidth);
+    setActiveIndex(Math.min(showcaseProjects.length - 1, Math.max(0, nextIndex)));
+  };
+
+  return (
+    <section className="project-rack-showcase" aria-labelledby="project-rack-title">
+      <header className="project-rack-heading">
+        <div>
+          <p>SELECTED PROJECTS</p>
+          <h1 id="project-rack-title">
+            <span>Interactive</span>
+            <span>Project Showcase</span>
+          </h1>
+        </div>
+        <p className="project-rack-heading-note">
+          เลื่อน เลือก และสำรวจโปรเจกต์ ตั้งแต่ระบบจองสนามกีฬาไปจนถึงมินิเกม
+        </p>
+      </header>
+
+      <div className="project-rack-monitor" style={{ "--project-index": activeIndex }}>
+        <div className="project-rack-monitor-bar">
+          <strong>SP / PROJECT ARCHIVE</strong>
+          <div className="project-rack-monitor-dots" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <span>{String(activeIndex + 1).padStart(2, "0")} / {String(showcaseProjects.length).padStart(2, "0")}</span>
+        </div>
+
+        <div
+          className="project-rack-track"
+          ref={trackRef}
+          onScroll={updateActiveProject}
+          tabIndex="0"
+          aria-label="รายการโปรเจกต์แบบเลื่อนแนวนอน"
+        >
+          {showcaseProjects.map((project, index) => (
+            <article className="project-rack-slide" key={project.number}>
+              <div className={`project-rack-object project-rack-object-${project.badge.toLowerCase()}`}>
+                <span className="project-rack-wire" aria-hidden="true" />
+                <div className="project-rack-object-card">
+                  {project.image ? (
+                    <img src={project.image} alt="" loading={index === 0 ? "eager" : "lazy"} />
+                  ) : (
+                    <span className="project-rack-object-badge" aria-hidden="true">
+                      {project.badge}
+                    </span>
+                  )}
+                  <div className="project-rack-object-lines" aria-hidden="true">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                </div>
+                <span className="project-rack-shadow" aria-hidden="true" />
+              </div>
+
+              <div className="project-rack-copy">
+                <div className="project-rack-meta">
+                  <span>{project.type}</span>
+                  <span>{project.status}</span>
+                </div>
+                <p className="project-rack-number">PROJECT / {project.number}</p>
+                <h2>{project.title}</h2>
+                <p className="project-rack-description">{project.description}</p>
+
+                <div className="project-rack-stack" aria-label="เทคโนโลยีที่ใช้">
+                  {project.stack.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+
+                <div className="project-rack-actions">
+                  <Link to={project.link}>ดูรายละเอียด <span aria-hidden="true">↗</span></Link>
+                  {project.demoUrl && (
+                    <a href={project.demoUrl} target="_blank" rel="noreferrer">
+                      เปิดเดโม <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="project-rack-rail" aria-hidden="true">
+          <span />
+          <span />
+        </div>
+      </div>
+
+      <footer className="project-rack-controls">
+        <p>PROJECTS / SCROLL · SELECT · EXPLORE</p>
+        <div className="project-rack-selector" aria-label="เลือกโปรเจกต์">
+          {showcaseProjects.map((project, index) => (
+            <button
+              type="button"
+              key={project.number}
+              className={activeIndex === index ? "is-active" : ""}
+              onClick={() => selectProject(index)}
+              aria-current={activeIndex === index ? "true" : undefined}
+            >
+              <span>{project.number}</span>
+              <strong>{project.title}</strong>
+            </button>
+          ))}
+        </div>
+      </footer>
+    </section>
+  );
+}
 
 function ProjectCard({ project, featured = false }) {
   return (
@@ -164,7 +299,8 @@ function Projects() {
     : projects;
 
   return (
-    <main className="projects-page">
+    <main className={`projects-page ${activeTech ? "" : "projects-page-showcase"}`}>
+      {activeTech ? (
       <section className="projects-intro-card">
         <div className="projects-intro-copy">
           <p className="about-badge">{t("projectsPage.badge", { defaultValue: "PROJECTS" })}</p>
@@ -209,6 +345,9 @@ function Projects() {
           </div>
         </div>
       </section>
+      ) : (
+        <ProjectRack />
+      )}
 
       {activeTech && (
         <section className="projects-filter-bar" aria-live="polite">
@@ -231,8 +370,8 @@ function Projects() {
         </section>
       )}
 
-      <section className="projects-work-section">
-        {activeTech ? (
+      {activeTech && (
+        <section className="projects-work-section">
           <>
             <div className="projects-work-head projects-filter-heading">
               <div>
@@ -277,55 +416,8 @@ function Projects() {
               </div>
             )}
           </>
-        ) : (
-          <>
-            <div className="projects-work-head">
-          <div>
-            <p className="section-kicker">
-              {t("projectsPage.sections.featured.kicker", {
-                defaultValue: "FEATURED PROJECT",
-              })}
-            </p>
-            <h2>
-              {t("projectsPage.sections.featured.title", {
-                defaultValue: "โปรเจกต์เด่นที่กำลังพัฒนา",
-              })}
-            </h2>
-          </div>
-
-          <p>
-            {t("projectsPage.sections.featured.description", {
-              defaultValue:
-                "งานที่เลือกมาเน้นการเล่า flow การใช้งานจริง เทคโนโลยีที่ใช้ และแนวคิดในการออกแบบระบบให้เห็นทั้งภาพรวมและรายละเอียด",
-            })}
-          </p>
-        </div>
-
-        {featuredProject && <ProjectCard project={featuredProject} featured />}
-
-        <div className="projects-work-head projects-work-head-secondary">
-          <div>
-            <p className="section-kicker">
-              {t("projectsPage.sections.selected.kicker", {
-                defaultValue: "SELECTED WORKS",
-              })}
-            </p>
-            <h2>
-              {t("projectsPage.sections.selected.title", {
-                defaultValue: "โปรเจกต์อื่นที่น่าสนใจ",
-              })}
-            </h2>
-          </div>
-        </div>
-
-        <div className="projects-grid-clean">
-          {otherProjects.map((project) => (
-            <ProjectCard project={project} key={project.number} />
-          ))}
-        </div>
-          </>
-        )}
-      </section>
+        </section>
+      )}
     </main>
   );
 }

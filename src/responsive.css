@@ -932,6 +932,14 @@ body[data-theme="dark"] .world-clock-zone.is-active > small {
     grid-template-columns: 1fr;
   }
 
+  .about-education-hero {
+    height: 440px;
+  }
+
+  .about-education-hero img {
+    object-position: center 34%;
+  }
+
   .contact-card.is-wide {
     grid-column: auto;
   }
@@ -1271,5 +1279,69 @@ body[data-theme="dark"] .world-clock-zone.is-active > small {
   .projects-empty-state .project-clean-link {
     grid-column: 1 / -1;
     width: 100%;
+  }
+}
+
+/* Keep the mobile close control anchored to the viewport and animate the drawer. */
+@media (max-width: 1100px) {
+  body.navigation-open .header-menu-button {
+    position: fixed;
+    top: max(0.7rem, env(safe-area-inset-top));
+    right: max(0.75rem, env(safe-area-inset-right));
+    z-index: 100;
+    margin: 0;
+    transform: none;
+    border-color: rgba(255, 255, 255, 0.28);
+    background: #475569;
+    box-shadow: 0 10px 26px rgba(2, 6, 23, 0.32);
+  }
+
+  body.navigation-open .header-menu-button:hover,
+  body.navigation-open .header-menu-button.is-open {
+    transform: none;
+    background: #334155;
+  }
+
+  body.navigation-open .theme-toggle,
+  body.navigation-open .site-meta-pill,
+  body.navigation-open .header-language,
+  body.navigation-open .header-primary-link {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .sidebar-shell {
+    display: grid;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate3d(24px, 0, 0);
+    transition:
+      opacity 0.22s ease,
+      transform 0.22s ease,
+      visibility 0s linear 0.22s;
+  }
+
+  .sidebar.is-open .sidebar-shell {
+    display: grid;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0);
+    transition-delay: 0s;
+  }
+}
+
+@media (max-width: 576px) {
+  body.navigation-open .header-menu-button {
+    top: max(0.58rem, env(safe-area-inset-top));
+    right: max(0.62rem, env(safe-area-inset-right));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-shell {
+    transition: none;
   }
 }

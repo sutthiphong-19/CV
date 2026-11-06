@@ -144,6 +144,41 @@ const en = {
       more: "Learn More",
       contact: "Contact Me",
     },
+    education: {
+      kicker: "EDUCATION",
+      title: "Education History",
+      imageAlt: "Education history illustration",
+      badge: "COMPUTER SCIENCE",
+      headline: "Bachelor of Science in Computer Science",
+      description: "College of Computing, Khon Kaen University",
+      detailsKicker: "ACADEMIC JOURNEY",
+      detailsTitle: "From foundations to practical development",
+      note:
+        "My undergraduate studies built a foundation across software, data systems, artificial intelligence, and hands-on project development.",
+      highlights: {
+        degree: {
+          title: "Bachelor of Science (Computer Science)",
+          description: "College of Computing, Khon Kaen University",
+        },
+        upperSecondary: {
+          title: "Upper Secondary Education",
+          description: "The stage that prepared me for further study in computer science.",
+        },
+        lowerSecondary: {
+          title: "Lower Secondary Education",
+          description: "The stage where I built learning foundations and explored technology.",
+        },
+        period: {
+          title: "Bachelor's degree, 2021 - 2025",
+          description: "Admitted July 12, 2021 and graduated September 18, 2025.",
+        },
+        learning: {
+          title: "Software, data, and artificial intelligence",
+          description:
+            "Studied web applications, databases, software engineering, AI, machine learning, and computer science projects.",
+        },
+      },
+    },
     stats: {
       focus: {
         label: "Focus",

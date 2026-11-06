@@ -140,7 +140,7 @@ function Header({ isMenuOpen, onMenuToggle }) {
             type="button"
             className={`header-menu-button${isMenuOpen ? " is-open" : ""}`}
             onClick={onMenuToggle}
-            aria-label={t("nav.menu")}
+            aria-label={isMenuOpen ? (isThai ? "ปิดเมนู" : "Close navigation") : t("nav.menu")}
             aria-expanded={isMenuOpen}
             aria-controls="sidebar-navigation-panel"
           >

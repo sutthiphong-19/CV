@@ -39,6 +39,14 @@ function Home() {
             <button
               type="button"
               className="outline"
+              onClick={() => navigate("/about")}
+            >
+              {t("nav.about")}
+            </button>
+
+            <button
+              type="button"
+              className="outline"
               onClick={() => navigate("/contact")}
             >
               {t("home.ctas.contact")}
