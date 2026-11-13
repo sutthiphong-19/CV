@@ -76,6 +76,44 @@ const projects = [
     status: "พร้อมทดลองเล่น",
     link: "/game",
   },
+  {
+    number: "06",
+    badge: "LAB",
+    title: "Fixlab IT Support Learning Center",
+    type: "IT Support Learning Platform",
+    description:
+      "ศูนย์เรียนรู้การแก้ปัญหาคอมพิวเตอร์ ครอบคลุมบทเรียนด้าน Windows, Hardware และ Network พร้อมคำสั่งและเครื่องมือสำหรับงาน IT Support",
+    stack: ["IT Support", "Troubleshooting", "Learning Platform"],
+    relatedTech: ["IT Support", "Troubleshooting", "Learning Platform"],
+    status: "พร้อมใช้งาน",
+    link: "/portfolio/fixlab",
+    demoUrl: "https://cp-sp.onrender.com",
+    featured: true,
+    summary: [
+      "รวบรวมบทเรียนแก้ปัญหาจากอาการที่พบได้จริง",
+      "จัดเนื้อหาเป็นหมวดหมู่เพื่อค้นหาได้สะดวก",
+      "มีคำสั่งและเครื่องมือประกอบการเรียนรู้",
+    ],
+  },
+  {
+    number: "07",
+    badge: "CCTV",
+    title: "Inside the CCTV",
+    type: "Interactive Field Study",
+    description:
+      "บทเรียนเชิงโต้ตอบที่พาสำรวจส่วนประกอบของกล้องวงจรปิด เส้นทางสัญญาณ และการเชื่อมต่ออุปกรณ์จัดเก็บและแสดงผล",
+    stack: ["CCTV", "Interactive Study", "Camera Systems"],
+    relatedTech: ["CCTV", "Interactive Study", "Camera Systems"],
+    status: "พร้อมใช้งาน",
+    link: "/portfolio/cctv-study",
+    demoUrl: "https://cctv-sp.onrender.com",
+    featured: true,
+    summary: [
+      "สำรวจเลนส์และส่วนประกอบภายในกล้อง",
+      "อธิบายเส้นทางสัญญาณภาพจากกล้องไปยังอุปกรณ์จัดเก็บ",
+      "นำเสนอข้อมูลเป็นบทเรียนเชิงโต้ตอบ",
+    ],
+  },
 ];
 
 const showcaseProjects = projects.filter((project) => project.number !== "01");
@@ -117,7 +155,7 @@ function ProjectRack() {
           </h1>
         </div>
         <p className="project-rack-heading-note">
-          เลื่อน เลือก และสำรวจโปรเจกต์ ตั้งแต่ระบบจองสนามกีฬาไปจนถึงมินิเกม
+          เลื่อน เลือก และสำรวจโปรเจกต์ ตั้งแต่ระบบจองสนามกีฬาไปจนถึงบทเรียน IT Support และ CCTV
         </p>
       </header>
 
